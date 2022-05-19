@@ -1,6 +1,4 @@
-1;2;True;Geab Gog
-2;4;True;Geab Gog
-3;2;False;Anita Fale
+1;4;True;Geab Gog
+2;2;False;Anita Fale
 4;1;True;Pepe Pugot
-5;1;True;Pepe Pugot
-6;2;True;Pepe Gog(не зарегестрирован)
+6;2;False;Anita Fale

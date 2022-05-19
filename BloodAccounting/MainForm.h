@@ -221,9 +221,9 @@ namespace BloodAccounting {
 			// 
 			this->lbBlood->FormattingEnabled = true;
 			this->lbBlood->ItemHeight = 16;
-			this->lbBlood->Location = System::Drawing::Point(14, 41);
+			this->lbBlood->Location = System::Drawing::Point(14, 73);
 			this->lbBlood->Name = L"lbBlood";
-			this->lbBlood->Size = System::Drawing::Size(319, 340);
+			this->lbBlood->Size = System::Drawing::Size(319, 308);
 			this->lbBlood->TabIndex = 10;
 			this->lbBlood->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::listBox1_SelectedIndexChanged);
 			// 
@@ -232,7 +232,7 @@ namespace BloodAccounting {
 			this->cb1gen->AutoSize = true;
 			this->cb1gen->Checked = true;
 			this->cb1gen->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb1gen->Location = System::Drawing::Point(294, 6);
+			this->cb1gen->Location = System::Drawing::Point(102, 6);
 			this->cb1gen->Name = L"cb1gen";
 			this->cb1gen->Size = System::Drawing::Size(39, 21);
 			this->cb1gen->TabIndex = 9;
@@ -244,7 +244,7 @@ namespace BloodAccounting {
 			this->cb0gen->AutoSize = true;
 			this->cb0gen->Checked = true;
 			this->cb0gen->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb0gen->Location = System::Drawing::Point(249, 6);
+			this->cb0gen->Location = System::Drawing::Point(102, 33);
 			this->cb0gen->Name = L"cb0gen";
 			this->cb0gen->Size = System::Drawing::Size(39, 21);
 			this->cb0gen->TabIndex = 8;
@@ -256,7 +256,7 @@ namespace BloodAccounting {
 			this->cb4gr->AutoSize = true;
 			this->cb4gr->Checked = true;
 			this->cb4gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb4gr->Location = System::Drawing::Point(145, 6);
+			this->cb4gr->Location = System::Drawing::Point(57, 33);
 			this->cb4gr->Name = L"cb4gr";
 			this->cb4gr->Size = System::Drawing::Size(48, 21);
 			this->cb4gr->TabIndex = 7;
@@ -268,7 +268,7 @@ namespace BloodAccounting {
 			this->cb3gr->AutoSize = true;
 			this->cb3gr->Checked = true;
 			this->cb3gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb3gr->Location = System::Drawing::Point(101, 6);
+			this->cb3gr->Location = System::Drawing::Point(12, 34);
 			this->cb3gr->Name = L"cb3gr";
 			this->cb3gr->Size = System::Drawing::Size(39, 21);
 			this->cb3gr->TabIndex = 6;
@@ -329,6 +329,7 @@ namespace BloodAccounting {
 			this->deleteBlood->TabIndex = 1;
 			this->deleteBlood->Text = L"Списать";
 			this->deleteBlood->UseVisualStyleBackColor = true;
+			this->deleteBlood->Click += gcnew System::EventHandler(this, &MainForm::deleteBlood_Click);
 			// 
 			// addBlood
 			// 
@@ -430,7 +431,7 @@ namespace BloodAccounting {
 			auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
 			
 			auto group = Convert::ToInt32(this->cbGroup->SelectedIndex) + 1;
-			auto rhFactor = this->rbFactorM->Checked ? rbFactorM->Checked : rbFactorP->Checked;
+			auto rhFactor = !this->rbFactorM->Checked;
 			
 			selectBlood->setGroup(group);
 			selectBlood->setRhFactor(rhFactor);
@@ -439,11 +440,20 @@ namespace BloodAccounting {
 				Donor^ donor = donors[this->cbDonor->SelectedIndex];
 				selectBlood->setDonor(donor);
 			}
+			auto index = this->lbBlood->SelectedIndex;
+
 			WriteBloodFile();
 			FillFormBloodList();
 
-			MessageBox::Show("Данные обновлены");
-
+			this->lbBlood->SelectedIndex = index;
 		}
-	};
+		System::Void deleteBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (MessageBox::Show("Списать пакет?", "Внимание!", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes) {
+				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
+				blood.Remove(selectBlood);
+				WriteBloodFile();
+				FillFormBloodList();
+			}
+		}
+};
 }

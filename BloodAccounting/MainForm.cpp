@@ -50,6 +50,7 @@ Void MainForm::WriteDonorsFile() {
 		writer->Close();
 	}
 }
+
 Void MainForm::WriteLog(String^ log) {
 	StreamWriter^ writer;
 	try {
@@ -193,9 +194,11 @@ Void MainForm::FillFormDonorsList() {
 }
 
 Void MainForm::FillFormDonorsComboBox() {
+	this->cbDonor->Items->Clear();
 	for (int i = 0; i < donors.Count; i++)
 		this->cbDonor->Items->Add(donors[i]->getName());
 }
 
 Void MainForm::UpdateBloodList() {}
+
 Void MainForm::UpdateDonorsList() {}
