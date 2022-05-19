@@ -134,6 +134,7 @@ Void MainForm::FillDonorsList() {
 Void MainForm::FillBloodList() {
 	StreamReader^ reader;
 	try {
+		blood.Clear();
 		reader = gcnew StreamReader(BloodFile);
 		String^ line;
 		while (line = reader->ReadLine()) {
@@ -145,8 +146,9 @@ Void MainForm::FillBloodList() {
 				auto factor = Convert::ToBoolean(buffer[2]);
 				auto donorName = buffer[3];
 				auto donor = gcnew Donor();
-				donor->setName(donorName + "(не зарегестрирован)");
-
+				donor->setName(donorName);
+				if (!donorName->EndsWith("(не зарегестрирован)")) 
+					donor->setName(donorName + "(не зарегестрирован)");
 				//поиск донора
 				for (int i = 0; i < donors.Count; i++) {
 					if (donors[i]->getName() == donorName) {
@@ -177,3 +179,23 @@ Void MainForm::FillData() {
 	FillDonorsList();
 	FillBloodList();
 }
+
+Void MainForm::FillFormBloodList() {
+	lbBlood->ClearSelected();
+	lbBlood->Items->Clear();
+	for (int i = 0; i < blood.Count; i++) {
+		lbBlood->Items->Add(blood[i]);
+	}
+}
+
+Void MainForm::FillFormDonorsList() {
+
+}
+
+Void MainForm::FillFormDonorsComboBox() {
+	for (int i = 0; i < donors.Count; i++)
+		this->cbDonor->Items->Add(donors[i]->getName());
+}
+
+Void MainForm::UpdateBloodList() {}
+Void MainForm::UpdateDonorsList() {}

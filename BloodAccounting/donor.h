@@ -51,6 +51,9 @@ namespace BloodAccounting {
 		String^ ToString() override {
 			return getName() + ";" + getAge() + ";" + getGender();
 		}
+		/*Boolean^ Equals(Donor^ other) override {
+			return (other->getName() == this->getName() && other->getAge() == this->getAge() && other->getGender() == this->getGender());
+		}*/
 	};
 
 };
