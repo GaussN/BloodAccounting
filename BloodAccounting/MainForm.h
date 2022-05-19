@@ -18,7 +18,12 @@ namespace BloodAccounting {
 		String^ DonorsFile = "data\\donors.txt";
 		String^ LogsFile = "data\\logs.txt";
 		List<Blood^> blood;
-		List<Donor^> donors;
+	private: System::Windows::Forms::ComboBox^ cbDonorS;
+	private: System::Windows::Forms::Button^ bFindBlood;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::GroupBox^ groupBox2;
+
+		   List<Donor^> donors;
 	public:
 		MainForm(void)
 		{
@@ -41,8 +46,8 @@ namespace BloodAccounting {
 			}
 		}
 	private: 
-		System::Windows::Forms::CheckBox^ cb1gen;
-		System::Windows::Forms::CheckBox^ cb0gen;
+
+
 		System::Windows::Forms::CheckBox^ cb4gr;
 		System::Windows::Forms::CheckBox^ cb3gr;
 		System::Windows::Forms::CheckBox^ cb2gr;
@@ -72,6 +77,7 @@ namespace BloodAccounting {
 		{
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->cbDonorS = (gcnew System::Windows::Forms::ComboBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->cbDonor = (gcnew System::Windows::Forms::ComboBox());
@@ -81,8 +87,6 @@ namespace BloodAccounting {
 			this->rbFactorM = (gcnew System::Windows::Forms::RadioButton());
 			this->rbFactorP = (gcnew System::Windows::Forms::RadioButton());
 			this->lbBlood = (gcnew System::Windows::Forms::ListBox());
-			this->cb1gen = (gcnew System::Windows::Forms::CheckBox());
-			this->cb0gen = (gcnew System::Windows::Forms::CheckBox());
 			this->cb4gr = (gcnew System::Windows::Forms::CheckBox());
 			this->cb3gr = (gcnew System::Windows::Forms::CheckBox());
 			this->cb2gr = (gcnew System::Windows::Forms::CheckBox());
@@ -93,9 +97,13 @@ namespace BloodAccounting {
 			this->addBlood = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->bFindBlood = (gcnew System::Windows::Forms::Button());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
+			this->groupBox2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -113,14 +121,10 @@ namespace BloodAccounting {
 			// 
 			// tabPage1
 			// 
+			this->tabPage1->Controls->Add(this->label4);
+			this->tabPage1->Controls->Add(this->groupBox2);
 			this->tabPage1->Controls->Add(this->groupBox1);
 			this->tabPage1->Controls->Add(this->lbBlood);
-			this->tabPage1->Controls->Add(this->cb1gen);
-			this->tabPage1->Controls->Add(this->cb0gen);
-			this->tabPage1->Controls->Add(this->cb4gr);
-			this->tabPage1->Controls->Add(this->cb3gr);
-			this->tabPage1->Controls->Add(this->cb2gr);
-			this->tabPage1->Controls->Add(this->cd1gr);
 			this->tabPage1->Controls->Add(this->useBlood);
 			this->tabPage1->Controls->Add(this->changeBlood);
 			this->tabPage1->Controls->Add(this->deleteBlood);
@@ -133,6 +137,15 @@ namespace BloodAccounting {
 			this->tabPage1->Text = L"Учет крови";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
+			// cbDonorS
+			// 
+			this->cbDonorS->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbDonorS->FormattingEnabled = true;
+			this->cbDonorS->Location = System::Drawing::Point(15, 21);
+			this->cbDonorS->Name = L"cbDonorS";
+			this->cbDonorS->Size = System::Drawing::Size(199, 24);
+			this->cbDonorS->TabIndex = 18;
+			// 
 			// groupBox1
 			// 
 			this->groupBox1->Controls->Add(this->label3);
@@ -142,9 +155,9 @@ namespace BloodAccounting {
 			this->groupBox1->Controls->Add(this->cbGroup);
 			this->groupBox1->Controls->Add(this->rbFactorM);
 			this->groupBox1->Controls->Add(this->rbFactorP);
-			this->groupBox1->Location = System::Drawing::Point(444, 34);
+			this->groupBox1->Location = System::Drawing::Point(405, 34);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(322, 347);
+			this->groupBox1->Size = System::Drawing::Size(361, 167);
 			this->groupBox1->TabIndex = 13;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Инормация о крови";
@@ -162,9 +175,9 @@ namespace BloodAccounting {
 			// 
 			this->cbDonor->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbDonor->FormattingEnabled = true;
-			this->cbDonor->Location = System::Drawing::Point(121, 124);
+			this->cbDonor->Location = System::Drawing::Point(138, 127);
 			this->cbDonor->Name = L"cbDonor";
-			this->cbDonor->Size = System::Drawing::Size(195, 24);
+			this->cbDonor->Size = System::Drawing::Size(212, 24);
 			this->cbDonor->TabIndex = 16;
 			// 
 			// label2
@@ -190,9 +203,9 @@ namespace BloodAccounting {
 			this->cbGroup->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbGroup->FormattingEnabled = true;
 			this->cbGroup->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"0", L"A", L"B", L"AB" });
-			this->cbGroup->Location = System::Drawing::Point(121, 37);
+			this->cbGroup->Location = System::Drawing::Point(138, 37);
 			this->cbGroup->Name = L"cbGroup";
-			this->cbGroup->Size = System::Drawing::Size(195, 24);
+			this->cbGroup->Size = System::Drawing::Size(212, 24);
 			this->cbGroup->TabIndex = 13;
 			// 
 			// rbFactorM
@@ -221,42 +234,18 @@ namespace BloodAccounting {
 			// 
 			this->lbBlood->FormattingEnabled = true;
 			this->lbBlood->ItemHeight = 16;
-			this->lbBlood->Location = System::Drawing::Point(14, 73);
+			this->lbBlood->Location = System::Drawing::Point(14, 41);
 			this->lbBlood->Name = L"lbBlood";
-			this->lbBlood->Size = System::Drawing::Size(319, 308);
+			this->lbBlood->Size = System::Drawing::Size(357, 340);
 			this->lbBlood->TabIndex = 10;
 			this->lbBlood->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::listBox1_SelectedIndexChanged);
-			// 
-			// cb1gen
-			// 
-			this->cb1gen->AutoSize = true;
-			this->cb1gen->Checked = true;
-			this->cb1gen->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb1gen->Location = System::Drawing::Point(102, 6);
-			this->cb1gen->Name = L"cb1gen";
-			this->cb1gen->Size = System::Drawing::Size(39, 21);
-			this->cb1gen->TabIndex = 9;
-			this->cb1gen->Text = L"м";
-			this->cb1gen->UseVisualStyleBackColor = true;
-			// 
-			// cb0gen
-			// 
-			this->cb0gen->AutoSize = true;
-			this->cb0gen->Checked = true;
-			this->cb0gen->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb0gen->Location = System::Drawing::Point(102, 33);
-			this->cb0gen->Name = L"cb0gen";
-			this->cb0gen->Size = System::Drawing::Size(39, 21);
-			this->cb0gen->TabIndex = 8;
-			this->cb0gen->Text = L"ж";
-			this->cb0gen->UseVisualStyleBackColor = true;
 			// 
 			// cb4gr
 			// 
 			this->cb4gr->AutoSize = true;
 			this->cb4gr->Checked = true;
 			this->cb4gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb4gr->Location = System::Drawing::Point(57, 33);
+			this->cb4gr->Location = System::Drawing::Point(59, 97);
 			this->cb4gr->Name = L"cb4gr";
 			this->cb4gr->Size = System::Drawing::Size(48, 21);
 			this->cb4gr->TabIndex = 7;
@@ -268,7 +257,7 @@ namespace BloodAccounting {
 			this->cb3gr->AutoSize = true;
 			this->cb3gr->Checked = true;
 			this->cb3gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb3gr->Location = System::Drawing::Point(12, 34);
+			this->cb3gr->Location = System::Drawing::Point(15, 97);
 			this->cb3gr->Name = L"cb3gr";
 			this->cb3gr->Size = System::Drawing::Size(39, 21);
 			this->cb3gr->TabIndex = 6;
@@ -280,7 +269,7 @@ namespace BloodAccounting {
 			this->cb2gr->AutoSize = true;
 			this->cb2gr->Checked = true;
 			this->cb2gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb2gr->Location = System::Drawing::Point(57, 6);
+			this->cb2gr->Location = System::Drawing::Point(59, 62);
 			this->cb2gr->Name = L"cb2gr";
 			this->cb2gr->Size = System::Drawing::Size(39, 21);
 			this->cb2gr->TabIndex = 5;
@@ -292,7 +281,7 @@ namespace BloodAccounting {
 			this->cd1gr->AutoSize = true;
 			this->cd1gr->Checked = true;
 			this->cd1gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cd1gr->Location = System::Drawing::Point(13, 6);
+			this->cd1gr->Location = System::Drawing::Point(15, 62);
 			this->cd1gr->Name = L"cd1gr";
 			this->cd1gr->Size = System::Drawing::Size(38, 21);
 			this->cd1gr->TabIndex = 4;
@@ -359,6 +348,39 @@ namespace BloodAccounting {
 			this->tabPage3->Text = L"Отчеты";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
+			// bFindBlood
+			// 
+			this->bFindBlood->Location = System::Drawing::Point(241, 139);
+			this->bFindBlood->Name = L"bFindBlood";
+			this->bFindBlood->Size = System::Drawing::Size(109, 29);
+			this->bFindBlood->TabIndex = 19;
+			this->bFindBlood->Text = L"Поиск\r\n";
+			this->bFindBlood->UseVisualStyleBackColor = true;
+			// 
+			// groupBox2
+			// 
+			this->groupBox2->Controls->Add(this->cbDonorS);
+			this->groupBox2->Controls->Add(this->bFindBlood);
+			this->groupBox2->Controls->Add(this->cd1gr);
+			this->groupBox2->Controls->Add(this->cb4gr);
+			this->groupBox2->Controls->Add(this->cb2gr);
+			this->groupBox2->Controls->Add(this->cb3gr);
+			this->groupBox2->Location = System::Drawing::Point(405, 207);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(361, 174);
+			this->groupBox2->TabIndex = 20;
+			this->groupBox2->TabStop = false;
+			this->groupBox2->Text = L"Поиск";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(11, 13);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(154, 17);
+			this->label4->TabIndex = 21;
+			this->label4->Text = L"Список пакетов крови";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -378,6 +400,8 @@ namespace BloodAccounting {
 			this->tabPage1->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
+			this->groupBox2->ResumeLayout(false);
+			this->groupBox2->PerformLayout();
 			this->ResumeLayout(false);
 
 		}

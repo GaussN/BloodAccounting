@@ -195,8 +195,12 @@ Void MainForm::FillFormDonorsList() {
 
 Void MainForm::FillFormDonorsComboBox() {
 	this->cbDonor->Items->Clear();
-	for (int i = 0; i < donors.Count; i++)
+	this->cbDonorS->Items->Clear();
+	this->cbDonorS->Items->Add("-");
+	for (int i = 0; i < donors.Count; i++) {
 		this->cbDonor->Items->Add(donors[i]->getName());
+		this->cbDonorS->Items->Add(donors[i]->getName());
+	}
 }
 
 Void MainForm::UpdateBloodList() {}
