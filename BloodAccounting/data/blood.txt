@@ -1,4 +1,7 @@
+0;2;True;Geab Gog
 1;4;True;Geab Gog
-2;2;False;Anita Fale
-4;1;True;Pepe Pugot
-6;2;False;Anita Fale
+2;1;False;Anita Fale
+3;2;False;Geab Gog
+4;3;False;Geab Gog
+5;3;True;Geab Gog
+6;2;False;Pepe Pugot

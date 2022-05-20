@@ -1,6 +1,7 @@
 #pragma once
 #include "donor.h"
 #include "blood.h"
+#include "BloodAddForm.h"
 namespace BloodAccounting {
 
 	using namespace System;
@@ -17,24 +18,23 @@ namespace BloodAccounting {
 		String^ BloodFile = "data\\blood.txt";
 		String^ DonorsFile = "data\\donors.txt";
 		String^ LogsFile = "data\\logs.txt";
+		String^ IncrementFile = "data\\increment.txt";
+		int increment;
+	public:
 		List<Blood^> blood;
-	private: System::Windows::Forms::ComboBox^ cbDonorS;
-	private: System::Windows::Forms::Button^ bFindBlood;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::GroupBox^ groupBox2;
-
-		   List<Donor^> donors;
+		List<Donor^> donors;
 	public:
 		MainForm(void)
 		{
 			CheckFiles();
+			SetIncrement();
 			InitializeComponent();
 			FillData();
 
 			FillFormBloodList();
 
 			FillFormDonorsComboBox();
-			//throw "123";
+		
 		}
 
 	protected:
@@ -47,11 +47,15 @@ namespace BloodAccounting {
 		}
 	private: 
 
-
+		System::Windows::Forms::ComboBox^ cbDonorS;
+		System::Windows::Forms::Button^ bFindBlood;
+		System::Windows::Forms::Label^ label4;
+		System::Windows::Forms::GroupBox^ groupBox2;
+		System::Windows::Forms::Button^ bReset;
 		System::Windows::Forms::CheckBox^ cb4gr;
 		System::Windows::Forms::CheckBox^ cb3gr;
 		System::Windows::Forms::CheckBox^ cb2gr;
-		System::Windows::Forms::CheckBox^ cd1gr;
+		System::Windows::Forms::CheckBox^ cb1gr;
 		System::Windows::Forms::Button^ useBlood;
 		System::Windows::Forms::Button^ changeBlood;
 		System::Windows::Forms::Button^ deleteBlood;
@@ -77,7 +81,15 @@ namespace BloodAccounting {
 		{
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->bReset = (gcnew System::Windows::Forms::Button());
 			this->cbDonorS = (gcnew System::Windows::Forms::ComboBox());
+			this->bFindBlood = (gcnew System::Windows::Forms::Button());
+			this->cb1gr = (gcnew System::Windows::Forms::CheckBox());
+			this->cb4gr = (gcnew System::Windows::Forms::CheckBox());
+			this->cb2gr = (gcnew System::Windows::Forms::CheckBox());
+			this->cb3gr = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->cbDonor = (gcnew System::Windows::Forms::ComboBox());
@@ -87,23 +99,16 @@ namespace BloodAccounting {
 			this->rbFactorM = (gcnew System::Windows::Forms::RadioButton());
 			this->rbFactorP = (gcnew System::Windows::Forms::RadioButton());
 			this->lbBlood = (gcnew System::Windows::Forms::ListBox());
-			this->cb4gr = (gcnew System::Windows::Forms::CheckBox());
-			this->cb3gr = (gcnew System::Windows::Forms::CheckBox());
-			this->cb2gr = (gcnew System::Windows::Forms::CheckBox());
-			this->cd1gr = (gcnew System::Windows::Forms::CheckBox());
 			this->useBlood = (gcnew System::Windows::Forms::Button());
 			this->changeBlood = (gcnew System::Windows::Forms::Button());
 			this->deleteBlood = (gcnew System::Windows::Forms::Button());
 			this->addBlood = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
-			this->bFindBlood = (gcnew System::Windows::Forms::Button());
-			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
-			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -137,6 +142,41 @@ namespace BloodAccounting {
 			this->tabPage1->Text = L"Учет крови";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(11, 13);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(154, 17);
+			this->label4->TabIndex = 21;
+			this->label4->Text = L"Список пакетов крови";
+			// 
+			// groupBox2
+			// 
+			this->groupBox2->Controls->Add(this->bReset);
+			this->groupBox2->Controls->Add(this->cbDonorS);
+			this->groupBox2->Controls->Add(this->bFindBlood);
+			this->groupBox2->Controls->Add(this->cb1gr);
+			this->groupBox2->Controls->Add(this->cb4gr);
+			this->groupBox2->Controls->Add(this->cb2gr);
+			this->groupBox2->Controls->Add(this->cb3gr);
+			this->groupBox2->Location = System::Drawing::Point(405, 207);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(361, 174);
+			this->groupBox2->TabIndex = 20;
+			this->groupBox2->TabStop = false;
+			this->groupBox2->Text = L"Поиск";
+			// 
+			// bReset
+			// 
+			this->bReset->Location = System::Drawing::Point(241, 59);
+			this->bReset->Name = L"bReset";
+			this->bReset->Size = System::Drawing::Size(109, 24);
+			this->bReset->TabIndex = 20;
+			this->bReset->Text = L"Сбросить";
+			this->bReset->UseVisualStyleBackColor = true;
+			this->bReset->Click += gcnew System::EventHandler(this, &MainForm::bReset_Click);
+			// 
 			// cbDonorS
 			// 
 			this->cbDonorS->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
@@ -145,6 +185,64 @@ namespace BloodAccounting {
 			this->cbDonorS->Name = L"cbDonorS";
 			this->cbDonorS->Size = System::Drawing::Size(199, 24);
 			this->cbDonorS->TabIndex = 18;
+			// 
+			// bFindBlood
+			// 
+			this->bFindBlood->Location = System::Drawing::Point(241, 21);
+			this->bFindBlood->Name = L"bFindBlood";
+			this->bFindBlood->Size = System::Drawing::Size(109, 24);
+			this->bFindBlood->TabIndex = 19;
+			this->bFindBlood->Text = L"Поиск\r\n";
+			this->bFindBlood->UseVisualStyleBackColor = true;
+			this->bFindBlood->Click += gcnew System::EventHandler(this, &MainForm::bFindBlood_Click);
+			// 
+			// cd1gr
+			// 
+			this->cb1gr->AutoSize = true;
+			this->cb1gr->Checked = true;
+			this->cb1gr->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->cb1gr->Location = System::Drawing::Point(15, 62);
+			this->cb1gr->Name = L"cd1gr";
+			this->cb1gr->Size = System::Drawing::Size(38, 21);
+			this->cb1gr->TabIndex = 4;
+			this->cb1gr->Text = L"0";
+			this->cb1gr->UseVisualStyleBackColor = true;
+			// 
+			// cb4gr
+			// 
+			this->cb4gr->AutoSize = true;
+			this->cb4gr->Checked = true;
+			this->cb4gr->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->cb4gr->Location = System::Drawing::Point(59, 97);
+			this->cb4gr->Name = L"cb4gr";
+			this->cb4gr->Size = System::Drawing::Size(48, 21);
+			this->cb4gr->TabIndex = 7;
+			this->cb4gr->Text = L"AB";
+			this->cb4gr->UseVisualStyleBackColor = true;
+			// 
+			// cb2gr
+			// 
+			this->cb2gr->AutoSize = true;
+			this->cb2gr->Checked = true;
+			this->cb2gr->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->cb2gr->Location = System::Drawing::Point(59, 62);
+			this->cb2gr->Name = L"cb2gr";
+			this->cb2gr->Size = System::Drawing::Size(39, 21);
+			this->cb2gr->TabIndex = 5;
+			this->cb2gr->Text = L"A";
+			this->cb2gr->UseVisualStyleBackColor = true;
+			// 
+			// cb3gr
+			// 
+			this->cb3gr->AutoSize = true;
+			this->cb3gr->Checked = true;
+			this->cb3gr->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->cb3gr->Location = System::Drawing::Point(15, 97);
+			this->cb3gr->Name = L"cb3gr";
+			this->cb3gr->Size = System::Drawing::Size(39, 21);
+			this->cb3gr->TabIndex = 6;
+			this->cb3gr->Text = L"B";
+			this->cb3gr->UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -240,54 +338,6 @@ namespace BloodAccounting {
 			this->lbBlood->TabIndex = 10;
 			this->lbBlood->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::listBox1_SelectedIndexChanged);
 			// 
-			// cb4gr
-			// 
-			this->cb4gr->AutoSize = true;
-			this->cb4gr->Checked = true;
-			this->cb4gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb4gr->Location = System::Drawing::Point(59, 97);
-			this->cb4gr->Name = L"cb4gr";
-			this->cb4gr->Size = System::Drawing::Size(48, 21);
-			this->cb4gr->TabIndex = 7;
-			this->cb4gr->Text = L"AB";
-			this->cb4gr->UseVisualStyleBackColor = true;
-			// 
-			// cb3gr
-			// 
-			this->cb3gr->AutoSize = true;
-			this->cb3gr->Checked = true;
-			this->cb3gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb3gr->Location = System::Drawing::Point(15, 97);
-			this->cb3gr->Name = L"cb3gr";
-			this->cb3gr->Size = System::Drawing::Size(39, 21);
-			this->cb3gr->TabIndex = 6;
-			this->cb3gr->Text = L"B";
-			this->cb3gr->UseVisualStyleBackColor = true;
-			// 
-			// cb2gr
-			// 
-			this->cb2gr->AutoSize = true;
-			this->cb2gr->Checked = true;
-			this->cb2gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cb2gr->Location = System::Drawing::Point(59, 62);
-			this->cb2gr->Name = L"cb2gr";
-			this->cb2gr->Size = System::Drawing::Size(39, 21);
-			this->cb2gr->TabIndex = 5;
-			this->cb2gr->Text = L"A";
-			this->cb2gr->UseVisualStyleBackColor = true;
-			// 
-			// cd1gr
-			// 
-			this->cd1gr->AutoSize = true;
-			this->cd1gr->Checked = true;
-			this->cd1gr->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->cd1gr->Location = System::Drawing::Point(15, 62);
-			this->cd1gr->Name = L"cd1gr";
-			this->cd1gr->Size = System::Drawing::Size(38, 21);
-			this->cd1gr->TabIndex = 4;
-			this->cd1gr->Text = L"0";
-			this->cd1gr->UseVisualStyleBackColor = true;
-			// 
 			// useBlood
 			// 
 			this->useBlood->Enabled = false;
@@ -328,6 +378,7 @@ namespace BloodAccounting {
 			this->addBlood->TabIndex = 0;
 			this->addBlood->Text = L"Добавить";
 			this->addBlood->UseVisualStyleBackColor = true;
+			this->addBlood->Click += gcnew System::EventHandler(this, &MainForm::addBlood_Click);
 			// 
 			// tabPage2
 			// 
@@ -348,39 +399,6 @@ namespace BloodAccounting {
 			this->tabPage3->Text = L"Отчеты";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
-			// bFindBlood
-			// 
-			this->bFindBlood->Location = System::Drawing::Point(241, 139);
-			this->bFindBlood->Name = L"bFindBlood";
-			this->bFindBlood->Size = System::Drawing::Size(109, 29);
-			this->bFindBlood->TabIndex = 19;
-			this->bFindBlood->Text = L"Поиск\r\n";
-			this->bFindBlood->UseVisualStyleBackColor = true;
-			// 
-			// groupBox2
-			// 
-			this->groupBox2->Controls->Add(this->cbDonorS);
-			this->groupBox2->Controls->Add(this->bFindBlood);
-			this->groupBox2->Controls->Add(this->cd1gr);
-			this->groupBox2->Controls->Add(this->cb4gr);
-			this->groupBox2->Controls->Add(this->cb2gr);
-			this->groupBox2->Controls->Add(this->cb3gr);
-			this->groupBox2->Location = System::Drawing::Point(405, 207);
-			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(361, 174);
-			this->groupBox2->TabIndex = 20;
-			this->groupBox2->TabStop = false;
-			this->groupBox2->Text = L"Поиск";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(11, 13);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(154, 17);
-			this->label4->TabIndex = 21;
-			this->label4->Text = L"Список пакетов крови";
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -398,10 +416,10 @@ namespace BloodAccounting {
 			this->tabControl->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
 			this->tabPage1->PerformLayout();
-			this->groupBox1->ResumeLayout(false);
-			this->groupBox1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -412,20 +430,26 @@ namespace BloodAccounting {
 		Void CheckDonorsFile();
 		Void CheckLogsFile();
 		Void CheckDirectory();
+		Void CheckIncrementFile();
 		Void CheckFiles();
 
 		Void WriteBloodFile();
 		Void WriteDonorsFile();
 		Void WriteLog(String^ log);
 
-		Void UpdateBloodList();
-		Void UpdateDonorsList();
+		Void UpdateBloodList(List<Blood^> bloodList, Blood^ newBlood);
+		Void UpdateDonorsList(List<Donor^> donorsList, Donor^ newDonor);
+
+		Void SetIncrement();
+		Void UpdateIncrement();
 
 		Void FillDonorsList();
 		Void FillBloodList();
 		Void FillData();
 
 		Void FillFormBloodList();
+		Void FillFormBloodList(String^ donorName);
+		Void FillFormBloodList(bool O, bool A, bool B, bool AB);
 		Void FillFormDonorsList();
 		Void FillFormDonorsComboBox();
 
@@ -479,5 +503,36 @@ namespace BloodAccounting {
 				FillFormBloodList();
 			}
 		}
-};
+		System::Void bReset_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->cbGroup->SelectedIndex = -1;
+			this->cbDonor->SelectedIndex = -1;
+			this->cbDonorS->SelectedIndex = -1;
+			FillFormBloodList();
+		}
+		System::Void addBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+			BloodAdd^ addForm = gcnew BloodAdd(DonorsFile);
+			if (addForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				Donor^ donor;
+				String^ donorName = addForm->Name;
+				for (int i = 0; i < donors.Count; i++) {
+					if (donorName = donors[i]->getName()) {
+						donor = donors[i];
+						break;
+					}
+				}
+				blood.Add(gcnew Blood(increment, addForm->Group, addForm->RhFactor, donor));
+				UpdateIncrement();
+				WriteBloodFile();
+				FillFormBloodList();
+			}
+		}
+		System::Void bFindBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (cbDonorS->SelectedIndex != -1) {
+				FillFormBloodList(cbDonorS->SelectedItem->ToString());
+			}
+			else {
+				FillFormBloodList(cb1gr->Checked, cb2gr->Checked, cb3gr->Checked, cb4gr->Checked);
+			}
+		}
+	};
 }

@@ -95,11 +95,16 @@ Void MainForm::CheckDirectory() {
 	}
 }
 
+Void MainForm::CheckIncrementFile() {
+	CheckFile(IncrementFile);
+}
+
 Void MainForm::CheckFiles() {
 	CheckDirectory();
 	CheckBloodFile();
 	CheckDonorsFile();
 	CheckLogsFile();
+	CheckIncrementFile();
 }
 
 Void MainForm::FillDonorsList() {
@@ -189,6 +194,40 @@ Void MainForm::FillFormBloodList() {
 	}
 }
 
+Void MainForm::FillFormBloodList(String^ donorName) {
+	lbBlood->ClearSelected();
+	lbBlood->Items->Clear();
+	for (int i = 0; i < blood.Count; i++) {
+		if (blood[i]->getDonor()->getName() == donorName)
+			lbBlood->Items->Add(blood[i]);
+	}
+}
+
+Void MainForm::FillFormBloodList(bool O, bool A, bool B, bool AB) {
+	lbBlood->ClearSelected();
+	lbBlood->Items->Clear();
+
+	for (int i = 0; i < blood.Count; i++) {
+		if (O && (int)blood[i]->getGroup() == 1) {
+			lbBlood->Items->Add(blood[i]);
+			continue;
+		}
+		if (A && (int)blood[i]->getGroup() == 2) {
+			lbBlood->Items->Add(blood[i]);
+			continue;
+		}
+		if (B && (int)blood[i]->getGroup() == 3) {
+			lbBlood->Items->Add(blood[i]);
+			continue;
+		}
+		if (AB && (int)blood[i]->getGroup() == 4) {
+			lbBlood->Items->Add(blood[i]);
+			continue;
+		}
+	}
+
+}
+
 Void MainForm::FillFormDonorsList() {
 
 }
@@ -196,13 +235,56 @@ Void MainForm::FillFormDonorsList() {
 Void MainForm::FillFormDonorsComboBox() {
 	this->cbDonor->Items->Clear();
 	this->cbDonorS->Items->Clear();
-	this->cbDonorS->Items->Add("-");
 	for (int i = 0; i < donors.Count; i++) {
 		this->cbDonor->Items->Add(donors[i]->getName());
 		this->cbDonorS->Items->Add(donors[i]->getName());
 	}
 }
 
-Void MainForm::UpdateBloodList() {}
+Void MainForm::UpdateBloodList(List<Blood^> bloodList, Blood^ newBlood) {
+	
+}
 
-Void MainForm::UpdateDonorsList() {}
+Void MainForm::UpdateDonorsList(List<Donor^> donorsList, Donor^ newDonor) {}
+
+Void MainForm::SetIncrement() {
+	StreamReader^ reader;
+	try {
+		reader = gcnew StreamReader(IncrementFile);
+		String^ line = reader->ReadLine();
+		increment = (int)Convert::ToInt32(line);
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+}
+
+Void MainForm::UpdateIncrement() {
+	increment++;
+	StreamWriter^ writer;
+	try {
+		writer = gcnew StreamWriter(this->IncrementFile);
+		writer->WriteLine(increment);
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка записи в файл");
+		Application::Exit();
+#endif
+	}
+	finally {
+		writer->Close();
+	}
+}
