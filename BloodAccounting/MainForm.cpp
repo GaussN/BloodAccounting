@@ -34,7 +34,7 @@ Void MainForm::WriteDonorsFile() {
 	try {
 		writer = gcnew StreamWriter(this->DonorsFile);
 		for (int i = 0; i < donors.Count; i++) {
-			writer->WriteLine(donors[i]->ToString());
+			writer->WriteLine(donors[i]->ToString(0));
 		}
 	}
 	catch (Exception^ ex) {
@@ -229,7 +229,11 @@ Void MainForm::FillFormBloodList(bool O, bool A, bool B, bool AB) {
 }
 
 Void MainForm::FillFormDonorsList() {
-
+	lbDonors->ClearSelected();
+	lbDonors->Items->Clear();
+	for (int i = 0; i < donors.Count; i++) {
+		lbDonors->Items->Add(donors[i]);
+	}
 }
 
 Void MainForm::FillFormDonorsComboBox() {

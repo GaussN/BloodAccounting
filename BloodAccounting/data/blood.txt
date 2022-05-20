@@ -1,6 +1,1 @@
-0;2;True;Geab Gog
-1;4;True;Geab Gog
-2;1;False;Anita Fale
-3;2;False;Geab Gog
-4;3;False;Geab Gog
-6;2;False;Pepe Pugot
+9;2;False;Gena Gapanowicz

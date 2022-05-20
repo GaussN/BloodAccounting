@@ -48,12 +48,12 @@ namespace BloodAccounting {
 
 #pragma endregion 
 
-		String^ ToString() override {
+		String^ ToString(int notused) {
 			return getName() + ";" + getAge() + ";" + getGender();
 		}
-		/*Boolean^ Equals(Donor^ other) override {
-			return (other->getName() == this->getName() && other->getAge() == this->getAge() && other->getGender() == this->getGender());
-		}*/
+		String^ ToString() override {
+			return getName();
+		}
 	};
 
 };

@@ -24,6 +24,15 @@ namespace BloodAccounting {
 		int increment;
 	public:
 		List<Blood^> blood;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::Label^ label12;
+	private: System::Windows::Forms::Label^ label11;
+	private: System::Windows::Forms::Label^ label10;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ label13;
+	public:
 		List<Donor^> donors;
 	public:
 		MainForm(void)
@@ -34,7 +43,7 @@ namespace BloodAccounting {
 			FillData();
 
 			FillFormBloodList();
-
+			FillFormDonorsList();
 			FillFormDonorsComboBox();
 		
 		}
@@ -48,7 +57,20 @@ namespace BloodAccounting {
 			}
 		}
 	private: 
+		System::Windows::Forms::GroupBox^ groupBox4;
+		System::Windows::Forms::Button^ bDonorAdd;
+		System::Windows::Forms::GroupBox^ groupBox3;
+		System::Windows::Forms::ComboBox^ cbDonorGender;
+		System::Windows::Forms::TextBox^ tbDonorName;
+		System::Windows::Forms::Button^ bDonorChange;
+		System::Windows::Forms::Button^ bDonorDelete;
+		System::Windows::Forms::Label^ label5;
+		System::Windows::Forms::ListBox^ lbDonors;
+		System::Windows::Forms::NumericUpDown^ nudNewDonorAge;
+	private: System::Windows::Forms::ComboBox^ cbNewDonorGender;
 
+		System::Windows::Forms::TextBox^ tbNewDonorName;
+		System::Windows::Forms::NumericUpDown^ nudDonorAge;
 		System::Windows::Forms::ComboBox^ cbDonorS;
 		System::Windows::Forms::Button^ bFindBlood;
 		System::Windows::Forms::Label^ label4;
@@ -106,11 +128,37 @@ namespace BloodAccounting {
 			this->deleteBlood = (gcnew System::Windows::Forms::Button());
 			this->addBlood = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->nudNewDonorAge = (gcnew System::Windows::Forms::NumericUpDown());
+			this->bDonorAdd = (gcnew System::Windows::Forms::Button());
+			this->cbNewDonorGender = (gcnew System::Windows::Forms::ComboBox());
+			this->tbNewDonorName = (gcnew System::Windows::Forms::TextBox());
+			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->nudDonorAge = (gcnew System::Windows::Forms::NumericUpDown());
+			this->cbDonorGender = (gcnew System::Windows::Forms::ComboBox());
+			this->tbDonorName = (gcnew System::Windows::Forms::TextBox());
+			this->bDonorChange = (gcnew System::Windows::Forms::Button());
+			this->bDonorDelete = (gcnew System::Windows::Forms::Button());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->lbDonors = (gcnew System::Windows::Forms::ListBox());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
+			this->tabPage2->SuspendLayout();
+			this->groupBox4->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudNewDonorAge))->BeginInit();
+			this->groupBox3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -274,6 +322,7 @@ namespace BloodAccounting {
 			// cbDonor
 			// 
 			this->cbDonor->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbDonor->Enabled = false;
 			this->cbDonor->FormattingEnabled = true;
 			this->cbDonor->Location = System::Drawing::Point(138, 127);
 			this->cbDonor->Name = L"cbDonor";
@@ -301,6 +350,7 @@ namespace BloodAccounting {
 			// cbGroup
 			// 
 			this->cbGroup->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbGroup->Enabled = false;
 			this->cbGroup->FormattingEnabled = true;
 			this->cbGroup->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"0", L"A", L"B", L"AB" });
 			this->cbGroup->Location = System::Drawing::Point(138, 37);
@@ -311,6 +361,7 @@ namespace BloodAccounting {
 			// rbFactorM
 			// 
 			this->rbFactorM->AutoSize = true;
+			this->rbFactorM->Enabled = false;
 			this->rbFactorM->Location = System::Drawing::Point(241, 82);
 			this->rbFactorM->Name = L"rbFactorM";
 			this->rbFactorM->Size = System::Drawing::Size(34, 21);
@@ -322,6 +373,7 @@ namespace BloodAccounting {
 			// rbFactorP
 			// 
 			this->rbFactorP->AutoSize = true;
+			this->rbFactorP->Enabled = false;
 			this->rbFactorP->Location = System::Drawing::Point(164, 82);
 			this->rbFactorP->Name = L"rbFactorP";
 			this->rbFactorP->Size = System::Drawing::Size(37, 21);
@@ -385,6 +437,10 @@ namespace BloodAccounting {
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->groupBox4);
+			this->tabPage2->Controls->Add(this->groupBox3);
+			this->tabPage2->Controls->Add(this->label5);
+			this->tabPage2->Controls->Add(this->lbDonors);
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
@@ -392,6 +448,212 @@ namespace BloodAccounting {
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Доноры";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// groupBox4
+			// 
+			this->groupBox4->Controls->Add(this->label12);
+			this->groupBox4->Controls->Add(this->label11);
+			this->groupBox4->Controls->Add(this->label10);
+			this->groupBox4->Controls->Add(this->label6);
+			this->groupBox4->Controls->Add(this->nudNewDonorAge);
+			this->groupBox4->Controls->Add(this->bDonorAdd);
+			this->groupBox4->Controls->Add(this->cbNewDonorGender);
+			this->groupBox4->Controls->Add(this->tbNewDonorName);
+			this->groupBox4->Location = System::Drawing::Point(322, 214);
+			this->groupBox4->Name = L"groupBox4";
+			this->groupBox4->Size = System::Drawing::Size(444, 202);
+			this->groupBox4->TabIndex = 4;
+			this->groupBox4->TabStop = false;
+			this->groupBox4->Text = L"Добавить нового донора";
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Location = System::Drawing::Point(277, 70);
+			this->label12->Name = L"label12";
+			this->label12->Size = System::Drawing::Size(34, 17);
+			this->label12->TabIndex = 14;
+			this->label12->Text = L"Пол";
+			// 
+			// label11
+			// 
+			this->label11->AutoSize = true;
+			this->label11->Location = System::Drawing::Point(16, 70);
+			this->label11->Name = L"label11";
+			this->label11->Size = System::Drawing::Size(62, 17);
+			this->label11->TabIndex = 14;
+			this->label11->Text = L"Возраст";
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Location = System::Drawing::Point(16, 40);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(42, 17);
+			this->label10->TabIndex = 14;
+			this->label10->Text = L"ФИО";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->ForeColor = System::Drawing::Color::Red;
+			this->label6->Location = System::Drawing::Point(16, 104);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(0, 17);
+			this->label6->TabIndex = 10;
+			// 
+			// nudNewDonorAge
+			// 
+			this->nudNewDonorAge->Location = System::Drawing::Point(116, 65);
+			this->nudNewDonorAge->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 99, 0, 0, 0 });
+			this->nudNewDonorAge->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 18, 0, 0, 0 });
+			this->nudNewDonorAge->Name = L"nudNewDonorAge";
+			this->nudNewDonorAge->Size = System::Drawing::Size(121, 22);
+			this->nudNewDonorAge->TabIndex = 9;
+			this->nudNewDonorAge->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 18, 0, 0, 0 });
+			// 
+			// bDonorAdd
+			// 
+			this->bDonorAdd->Location = System::Drawing::Point(280, 167);
+			this->bDonorAdd->Name = L"bDonorAdd";
+			this->bDonorAdd->Size = System::Drawing::Size(158, 29);
+			this->bDonorAdd->TabIndex = 3;
+			this->bDonorAdd->Text = L"Добавить";
+			this->bDonorAdd->UseVisualStyleBackColor = true;
+			this->bDonorAdd->Click += gcnew System::EventHandler(this, &MainForm::bDonorAdd_Click);
+			// 
+			// cbNewDonorGender
+			// 
+			this->cbNewDonorGender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbNewDonorGender->FormattingEnabled = true;
+			this->cbNewDonorGender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"муж", L"жен" });
+			this->cbNewDonorGender->Location = System::Drawing::Point(317, 63);
+			this->cbNewDonorGender->Name = L"cbNewDonorGender";
+			this->cbNewDonorGender->Size = System::Drawing::Size(121, 24);
+			this->cbNewDonorGender->TabIndex = 8;
+			// 
+			// tbNewDonorName
+			// 
+			this->tbNewDonorName->Location = System::Drawing::Point(116, 35);
+			this->tbNewDonorName->Name = L"tbNewDonorName";
+			this->tbNewDonorName->Size = System::Drawing::Size(322, 22);
+			this->tbNewDonorName->TabIndex = 7;
+			// 
+			// groupBox3
+			// 
+			this->groupBox3->Controls->Add(this->label13);
+			this->groupBox3->Controls->Add(this->label9);
+			this->groupBox3->Controls->Add(this->label8);
+			this->groupBox3->Controls->Add(this->label7);
+			this->groupBox3->Controls->Add(this->nudDonorAge);
+			this->groupBox3->Controls->Add(this->cbDonorGender);
+			this->groupBox3->Controls->Add(this->tbDonorName);
+			this->groupBox3->Controls->Add(this->bDonorChange);
+			this->groupBox3->Controls->Add(this->bDonorDelete);
+			this->groupBox3->Location = System::Drawing::Point(322, 39);
+			this->groupBox3->Name = L"groupBox3";
+			this->groupBox3->Size = System::Drawing::Size(444, 168);
+			this->groupBox3->TabIndex = 3;
+			this->groupBox3->TabStop = false;
+			this->groupBox3->Text = L"Данные донора";
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(277, 65);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(34, 17);
+			this->label9->TabIndex = 13;
+			this->label9->Text = L"Пол";
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(16, 65);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(62, 17);
+			this->label8->TabIndex = 12;
+			this->label8->Text = L"Возраст";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(16, 33);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(42, 17);
+			this->label7->TabIndex = 11;
+			this->label7->Text = L"ФИО";
+			// 
+			// nudDonorAge
+			// 
+			this->nudDonorAge->Enabled = false;
+			this->nudDonorAge->Location = System::Drawing::Point(116, 60);
+			this->nudDonorAge->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 99, 0, 0, 0 });
+			this->nudDonorAge->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 18, 0, 0, 0 });
+			this->nudDonorAge->Name = L"nudDonorAge";
+			this->nudDonorAge->Size = System::Drawing::Size(121, 22);
+			this->nudDonorAge->TabIndex = 6;
+			this->nudDonorAge->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 18, 0, 0, 0 });
+			// 
+			// cbDonorGender
+			// 
+			this->cbDonorGender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->cbDonorGender->Enabled = false;
+			this->cbDonorGender->FormattingEnabled = true;
+			this->cbDonorGender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"муж", L"жен" });
+			this->cbDonorGender->Location = System::Drawing::Point(317, 58);
+			this->cbDonorGender->Name = L"cbDonorGender";
+			this->cbDonorGender->Size = System::Drawing::Size(121, 24);
+			this->cbDonorGender->TabIndex = 5;
+			// 
+			// tbDonorName
+			// 
+			this->tbDonorName->Enabled = false;
+			this->tbDonorName->Location = System::Drawing::Point(116, 30);
+			this->tbDonorName->Name = L"tbDonorName";
+			this->tbDonorName->Size = System::Drawing::Size(322, 22);
+			this->tbDonorName->TabIndex = 4;
+			// 
+			// bDonorChange
+			// 
+			this->bDonorChange->Enabled = false;
+			this->bDonorChange->Location = System::Drawing::Point(116, 133);
+			this->bDonorChange->Name = L"bDonorChange";
+			this->bDonorChange->Size = System::Drawing::Size(158, 29);
+			this->bDonorChange->TabIndex = 3;
+			this->bDonorChange->Text = L"Изменить";
+			this->bDonorChange->UseVisualStyleBackColor = true;
+			this->bDonorChange->Click += gcnew System::EventHandler(this, &MainForm::bDonorChange_Click);
+			// 
+			// bDonorDelete
+			// 
+			this->bDonorDelete->Enabled = false;
+			this->bDonorDelete->Location = System::Drawing::Point(280, 133);
+			this->bDonorDelete->Name = L"bDonorDelete";
+			this->bDonorDelete->Size = System::Drawing::Size(158, 29);
+			this->bDonorDelete->TabIndex = 2;
+			this->bDonorDelete->Text = L"Удалить";
+			this->bDonorDelete->UseVisualStyleBackColor = true;
+			this->bDonorDelete->Click += gcnew System::EventHandler(this, &MainForm::bDonorDelete_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(8, 16);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(203, 17);
+			this->label5->TabIndex = 1;
+			this->label5->Text = L"Зарегестрированные доноры";
+			// 
+			// lbDonors
+			// 
+			this->lbDonors->FormattingEnabled = true;
+			this->lbDonors->ItemHeight = 16;
+			this->lbDonors->Location = System::Drawing::Point(8, 45);
+			this->lbDonors->Name = L"lbDonors";
+			this->lbDonors->Size = System::Drawing::Size(308, 372);
+			this->lbDonors->TabIndex = 0;
+			this->lbDonors->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::lbDonors_SelectedIndexChanged);
 			// 
 			// tabPage3
 			// 
@@ -401,6 +663,15 @@ namespace BloodAccounting {
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Отчеты";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->ForeColor = System::Drawing::Color::Red;
+			this->label13->Location = System::Drawing::Point(16, 104);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(0, 17);
+			this->label13->TabIndex = 14;
 			// 
 			// MainForm
 			// 
@@ -423,6 +694,14 @@ namespace BloodAccounting {
 			this->groupBox2->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
+			this->tabPage2->ResumeLayout(false);
+			this->tabPage2->PerformLayout();
+			this->groupBox4->ResumeLayout(false);
+			this->groupBox4->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudNewDonorAge))->EndInit();
+			this->groupBox3->ResumeLayout(false);
+			this->groupBox3->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -457,11 +736,15 @@ namespace BloodAccounting {
 		Void FillFormDonorsComboBox();
 
 	private: 
-		System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 			if (this->lbBlood->SelectedIndex != -1) {
 				this->deleteBlood->Enabled = true;
 				this->changeBlood->Enabled = true;
 				this->useBlood->Enabled = true;
+				this->cbGroup->Enabled = true;
+				this->rbFactorM->Enabled = true;
+				this->rbFactorP->Enabled = true;
+				this->cbDonor->Enabled = true;
 
 				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
 				this->cbGroup->SelectedIndex = (int)selectBlood->getGroup() - 1;
@@ -473,12 +756,17 @@ namespace BloodAccounting {
 				this->deleteBlood->Enabled = false;
 				this->changeBlood->Enabled = false;
 				this->useBlood->Enabled = false;
+				this->cbGroup->Enabled = false;
+				this->rbFactorM->Enabled = false;
+				this->rbFactorP->Enabled = false;
+				this->cbDonor->Enabled = false;
 
 				this->rbFactorM->Checked = false;
 				this->rbFactorP->Checked = false;
+
 			}
 		}
-		System::Void changeBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void changeBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
 			
 			auto group = Convert::ToInt32(this->cbGroup->SelectedIndex) + 1;
@@ -498,7 +786,7 @@ namespace BloodAccounting {
 
 			this->lbBlood->SelectedIndex = index;
 		}
-		System::Void deleteBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void deleteBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (MessageBox::Show("Списать пакет?", "Внимание!", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes) {
 				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
 				blood.Remove(selectBlood);
@@ -506,13 +794,13 @@ namespace BloodAccounting {
 				FillFormBloodList();
 			}
 		}
-		System::Void bReset_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void bReset_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->cbGroup->SelectedIndex = -1;
 			this->cbDonor->SelectedIndex = -1;
 			this->cbDonorS->SelectedIndex = -1;
 			FillFormBloodList();
 		}
-		System::Void addBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void addBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			BloodAdd^ addForm = gcnew BloodAdd(DonorsFile);
 			if (addForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				Donor^ donor;
@@ -529,7 +817,7 @@ namespace BloodAccounting {
 				FillFormBloodList();
 			}
 		}
-		System::Void bFindBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void bFindBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (cbDonorS->SelectedIndex != -1) {
 				FillFormBloodList(cbDonorS->SelectedItem->ToString());
 			}
@@ -537,7 +825,7 @@ namespace BloodAccounting {
 				FillFormBloodList(cb1gr->Checked, cb2gr->Checked, cb3gr->Checked, cb4gr->Checked);
 			}
 		}
-		System::Void useBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void useBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			
 			UseBloodForm^ useForm = gcnew UseBloodForm();
 			if (useForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
@@ -553,14 +841,117 @@ namespace BloodAccounting {
 				WriteBloodFile();
 				FillFormBloodList();
 			}
+		}
+		System::Void lbDonors_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (lbDonors->SelectedIndex == -1) {
+				bDonorChange->Enabled = false;
+				bDonorDelete->Enabled = false;
+				tbDonorName->Enabled = false;
+				nudDonorAge->Enabled = false;
+				cbDonor->Enabled = false;
+			}
+			else {
+				bDonorChange->Enabled = true;
+				bDonorDelete->Enabled = true;
+				tbDonorName->Enabled = true;
+				nudDonorAge->Enabled = true;
+				cbDonorGender->Enabled = true;
+				
+				Donor^ selectDonor = (Donor^)lbDonors->SelectedItem;
+				tbDonorName->Text = selectDonor->getName();
+				nudDonorAge->Value = Convert::ToDecimal(selectDonor->getAge());
+				cbDonorGender->SelectedIndex = selectDonor->getGender() ? 0 : 1;
 
+			}
+		}
+		System::Void bDonorDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (MessageBox::Show(
+				"Вы точно хотите удалить " + ((Donor^)lbDonors->SelectedItem)->getName() + "?",
+				"Предупреждение", 
+				System::Windows::Forms::MessageBoxButtons::YesNo
+			) == System::Windows::Forms::DialogResult::Yes) {
 
-			/*
-				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
-				blood.Remove(selectBlood);
-				WriteBloodFile();
-				FillFormBloodList();
-			*/
+				donors.Remove((Donor^)lbDonors->SelectedItem);
+				FillFormDonorsComboBox();
+				FillFormDonorsList();
+				WriteDonorsFile();
+			
+			}
+		}
+		System::Void bDonorChange_Click(System::Object^ sender, System::EventArgs^ e) {
+			Donor^ selectDonor = (Donor^)this->lbDonors->SelectedItem;
+			String^ oldName = selectDonor->getName();
+
+			if (this->tbDonorName->Text->Trim()->Length <= 2) {
+				label13->Text = "Имя должо содержать хотя бы 2 символа";
+				return;
+			}
+			if (this->tbDonorName->Text->Trim() != selectDonor->getName()){
+				for (int i = 0; i < donors.Count; i++) {
+					if (donors[i]->getName() == this->tbDonorName->Text->Trim()) {
+						label13->Text = "Донор с таким именем уже существует";
+						return;
+					}
+				}
+			}
+			if (this->cbDonorGender->SelectedIndex == -1) {
+				label13->Text = "Вы должны указать пол донора";
+				return;
+			}
+
+			
+			selectDonor->setName(this->tbDonorName->Text->Trim());
+			selectDonor->setAge(Convert::ToInt32(this->nudDonorAge->Value));
+			selectDonor->setGender(!Convert::ToBoolean(this->cbDonorGender->SelectedIndex));
+
+			for (int i = 0; i < blood.Count; i++) {
+				if (blood[i]->getDonor()->getName() == oldName) {
+					blood[i]->getDonor()->setName(this->tbDonorName->Text->Trim());
+				}
+			}
+
+			FillFormDonorsList();
+			FillFormDonorsComboBox();
+			FillFormBloodList();
+			WriteDonorsFile();
+			WriteBloodFile();
+
+			label13->Text = "";
+
+		}
+		System::Void bDonorAdd_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (this->tbNewDonorName->Text->Trim()->Length <= 2) {
+				label6->Text = "Имя должо содержать хотя бы 2 символа";
+				return;
+			}
+			for (int i = 0; i < donors.Count; i++) {
+				if (donors[i]->getName() == this->tbNewDonorName->Text->Trim()) {
+					label6->Text = "Донор с таким именем уже существует";
+					return;
+				}
+			}
+			if (this->cbNewDonorGender->SelectedIndex == -1) {
+				label6->Text = "Вы должны указать пол донора";
+				return;
+			}
+
+			Donor^ newDonor;
+			String^ name = this->tbNewDonorName->Text->Trim();
+			Int32^ age = Convert::ToInt32(this->nudNewDonorAge->Value);
+			Boolean^ gender = !Convert::ToBoolean(this->cbNewDonorGender->SelectedIndex);
+			newDonor = gcnew Donor(name, age, gender);
+
+			donors.Add(newDonor);
+
+			FillFormDonorsList();
+			FillFormDonorsComboBox();
+			WriteDonorsFile();
+			
+
+			label6->Text = "";
+			this->cbNewDonorGender->SelectedIndex = -1;
+			this->tbNewDonorName->Text = "";
+
 		}
 	};
 }

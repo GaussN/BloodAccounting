@@ -89,7 +89,7 @@ namespace BloodAccounting {
 			this->groupBox1->Size = System::Drawing::Size(403, 189);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Данные потребителя";
+			this->groupBox1->Text = L"Данные реципиента";
 			// 
 			// label6
 			// 
@@ -220,11 +220,11 @@ namespace BloodAccounting {
 		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 			
 			if (tbName->Text->Trim()->Length < 2) {
-				label1->Text = "Имя должно состоять минимум из 2х символов";
+				label1->Text = "Имя должно состоять минимум \nиз 2х символов";
 				return;
 			}
 			if (tbSurname->Text->Trim()->Length < 2) {
-				label1->Text = "Фамилия должна состоять минимум из 2х символов";
+				label1->Text = "Фамилия должна состоять минимум \nиз 2х символов";
 				return;
 			}
 			if (cbGender->SelectedIndex == -1) {
