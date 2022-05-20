@@ -2,6 +2,8 @@
 #include "donor.h"
 #include "blood.h"
 #include "BloodAddForm.h"
+#include "UseBloodForm.h"
+
 namespace BloodAccounting {
 
 	using namespace System;
@@ -196,13 +198,13 @@ namespace BloodAccounting {
 			this->bFindBlood->UseVisualStyleBackColor = true;
 			this->bFindBlood->Click += gcnew System::EventHandler(this, &MainForm::bFindBlood_Click);
 			// 
-			// cd1gr
+			// cb1gr
 			// 
 			this->cb1gr->AutoSize = true;
 			this->cb1gr->Checked = true;
 			this->cb1gr->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->cb1gr->Location = System::Drawing::Point(15, 62);
-			this->cb1gr->Name = L"cd1gr";
+			this->cb1gr->Name = L"cb1gr";
 			this->cb1gr->Size = System::Drawing::Size(38, 21);
 			this->cb1gr->TabIndex = 4;
 			this->cb1gr->Text = L"0";
@@ -347,6 +349,7 @@ namespace BloodAccounting {
 			this->useBlood->TabIndex = 3;
 			this->useBlood->Text = L"Использовать";
 			this->useBlood->UseVisualStyleBackColor = true;
+			this->useBlood->Click += gcnew System::EventHandler(this, &MainForm::useBlood_Click);
 			// 
 			// changeBlood
 			// 
@@ -533,6 +536,31 @@ namespace BloodAccounting {
 			else {
 				FillFormBloodList(cb1gr->Checked, cb2gr->Checked, cb3gr->Checked, cb4gr->Checked);
 			}
+		}
+		System::Void useBlood_Click(System::Object^ sender, System::EventArgs^ e) {
+			
+			UseBloodForm^ useForm = gcnew UseBloodForm();
+			if (useForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
+				String^ name = useForm->Name->Trim();
+				Int32^ age = useForm->Age;
+				Boolean^ gender = useForm->Gender;
+
+				String^ log = selectBlood->ToString() + ";" + name + ";" + age + ";" + gender;
+				
+				WriteLog(log);
+				blood.Remove(selectBlood);
+				WriteBloodFile();
+				FillFormBloodList();
+			}
+
+
+			/*
+				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
+				blood.Remove(selectBlood);
+				WriteBloodFile();
+				FillFormBloodList();
+			*/
 		}
 	};
 }
