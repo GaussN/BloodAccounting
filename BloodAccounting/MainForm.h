@@ -32,6 +32,9 @@ namespace BloodAccounting {
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::Label^ label13;
+	private: System::Windows::Forms::TabControl^ tabControl1;
+	private: System::Windows::Forms::TabPage^ tabPage4;
+	private: System::Windows::Forms::TabPage^ tabPage5;
 	public:
 		List<Donor^> donors;
 	public:
@@ -138,6 +141,7 @@ namespace BloodAccounting {
 			this->cbNewDonorGender = (gcnew System::Windows::Forms::ComboBox());
 			this->tbNewDonorName = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
@@ -149,7 +153,9 @@ namespace BloodAccounting {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->lbDonors = (gcnew System::Windows::Forms::ListBox());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
-			this->label13 = (gcnew System::Windows::Forms::Label());
+			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
+			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
@@ -159,6 +165,8 @@ namespace BloodAccounting {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudNewDonorAge))->BeginInit();
 			this->groupBox3->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->BeginInit();
+			this->tabPage3->SuspendLayout();
+			this->tabControl1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -557,6 +565,15 @@ namespace BloodAccounting {
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Данные донора";
 			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->ForeColor = System::Drawing::Color::Red;
+			this->label13->Location = System::Drawing::Point(16, 104);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(0, 17);
+			this->label13->TabIndex = 14;
+			// 
 			// label9
 			// 
 			this->label9->AutoSize = true;
@@ -657,6 +674,7 @@ namespace BloodAccounting {
 			// 
 			// tabPage3
 			// 
+			this->tabPage3->Controls->Add(this->tabControl1);
 			this->tabPage3->Location = System::Drawing::Point(4, 25);
 			this->tabPage3->Name = L"tabPage3";
 			this->tabPage3->Size = System::Drawing::Size(774, 424);
@@ -664,14 +682,36 @@ namespace BloodAccounting {
 			this->tabPage3->Text = L"Отчеты";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
-			// label13
+			// tabControl1
 			// 
-			this->label13->AutoSize = true;
-			this->label13->ForeColor = System::Drawing::Color::Red;
-			this->label13->Location = System::Drawing::Point(16, 104);
-			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(0, 17);
-			this->label13->TabIndex = 14;
+			this->tabControl1->Controls->Add(this->tabPage4);
+			this->tabControl1->Controls->Add(this->tabPage5);
+			this->tabControl1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->tabControl1->Location = System::Drawing::Point(0, 0);
+			this->tabControl1->Name = L"tabControl1";
+			this->tabControl1->SelectedIndex = 0;
+			this->tabControl1->Size = System::Drawing::Size(774, 424);
+			this->tabControl1->TabIndex = 0;
+			// 
+			// tabPage4
+			// 
+			this->tabPage4->Location = System::Drawing::Point(4, 25);
+			this->tabPage4->Name = L"tabPage4";
+			this->tabPage4->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage4->Size = System::Drawing::Size(766, 395);
+			this->tabPage4->TabIndex = 0;
+			this->tabPage4->Text = L"О донорской крови";
+			this->tabPage4->UseVisualStyleBackColor = true;
+			// 
+			// tabPage5
+			// 
+			this->tabPage5->Location = System::Drawing::Point(4, 25);
+			this->tabPage5->Name = L"tabPage5";
+			this->tabPage5->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage5->Size = System::Drawing::Size(766, 395);
+			this->tabPage5->TabIndex = 1;
+			this->tabPage5->Text = L"О использованной крови";
+			this->tabPage5->UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 
@@ -702,6 +742,8 @@ namespace BloodAccounting {
 			this->groupBox3->ResumeLayout(false);
 			this->groupBox3->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->EndInit();
+			this->tabPage3->ResumeLayout(false);
+			this->tabControl1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
