@@ -1,1 +1,14 @@
 9;2;False;Gena Gapanowicz
+1;1;False;Gena Gapanowicz
+2;2;False;Gena Gapanowicz
+3;4;True;Gena Gapanowicz
+4;3;True;Gena Gapanowicz
+5;2;True;Gena Gapanowicz
+6;4;True;Gena Gapanowicz
+7;4;True;Gena Gapanowicz
+8;4;True;Gena Gapanowicz
+9;3;False;Gena Gapanowicz
+10;4;False;Gena Gapanowicz
+11;4;True;Gena Gapanowicz
+12;1;True;Utyf Gapa
+13;1;True;Gena Gapanowicz

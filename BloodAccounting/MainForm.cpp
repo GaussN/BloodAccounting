@@ -245,9 +245,7 @@ Void MainForm::FillFormDonorsComboBox() {
 	}
 }
 
-Void MainForm::UpdateBloodList(List<Blood^> bloodList, Blood^ newBlood) {
-	
-}
+Void MainForm::UpdateBloodList(List<Blood^> bloodList, Blood^ newBlood) {}
 
 Void MainForm::UpdateDonorsList(List<Donor^> donorsList, Donor^ newDonor) {}
 
@@ -290,5 +288,120 @@ Void MainForm::UpdateIncrement() {
 	}
 	finally {
 		writer->Close();
+	}
+}
+
+Void MainForm::CreateReport1() {
+	int Op(0), Ap(0), Bp(0), ABp(0);
+	int On(0), An(0), Bn(0), ABn(0);
+	for (int i = 0; i < blood.Count; i++) {
+		switch ((int)blood[i]->getGroup()) {
+		case 1:
+			(bool)blood[i]->getRhFactor() ? Op++ : On++;
+			break;
+		case 2:
+			(bool)blood[i]->getRhFactor() ? Ap++ : An++;
+			break;
+		case 3:
+			(bool)blood[i]->getRhFactor() ? Bp++ : Bn++;
+			break;
+		case 4:
+			(bool)blood[i]->getRhFactor() ? ABp++ : ABn++;
+			break;
+		}
+	}
+
+	try {
+		this->chart1->Series->Clear();
+
+		this->chart1->Series->Add("положительный \nrh фактор");
+		this->chart1->Series[0]->Points->Clear();
+		this->chart1->Series[0]->Points->AddXY("0", Op);
+		this->chart1->Series[0]->Points->AddXY("A", Ap);
+		this->chart1->Series[0]->Points->AddXY("B", Bp);
+		this->chart1->Series[0]->Points->AddXY("AB", ABp);
+
+		this->chart1->Series->Add("отрицательный \nrh фактор");
+		this->chart1->Series[1]->Points->Clear();
+		this->chart1->Series[1]->Points->AddXY("0", On);
+		this->chart1->Series[1]->Points->AddXY("A", An);
+		this->chart1->Series[1]->Points->AddXY("B", Bn);
+		this->chart1->Series[1]->Points->AddXY("AB", ABn);
+
+	}
+	catch (Exception^ exc) {
+#ifdef DEBUG 
+		MessageBox::Show(exc->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка при построении графика");
+		Application::Exit();
+#endif
+	}
+}
+
+Void MainForm::CreateReport2() {
+	int Om(0), Am(0), Bm(0), ABm(0);
+	int Ow(0), Aw(0), Bw(0), ABw(0);
+	for (int i = 0; i < blood.Count; i++) {
+		switch ((int)blood[i]->getGroup()) {
+		case 1:
+			(bool)blood[i]->getDonor()->getGender() ? Om++ : Ow++;
+			break;
+		case 2:
+			(bool)blood[i]->getDonor()->getGender() ? Am++ : Aw++;
+			break;
+		case 3:
+			(bool)blood[i]->getDonor()->getGender() ? Bm++ : Bw++;
+			break;
+		case 4:
+			(bool)blood[i]->getDonor()->getGender() ? ABm++ : ABw++;
+			break;
+		}
+	}
+
+	try{
+		this->chart1->Series->Clear();
+
+		this->chart1->Series->Add("муж");
+		this->chart1->Series[0]->Points->Clear();
+		this->chart1->Series[0]->Points->AddXY("0", Om);
+		this->chart1->Series[0]->Points->AddXY("A", Am);
+		this->chart1->Series[0]->Points->AddXY("B", Bm);
+		this->chart1->Series[0]->Points->AddXY("AB", ABm);
+
+		this->chart1->Series->Add("жен");
+		this->chart1->Series[1]->Points->Clear();
+		this->chart1->Series[1]->Points->AddXY("0", Ow);
+		this->chart1->Series[1]->Points->AddXY("A", Aw);
+		this->chart1->Series[1]->Points->AddXY("B", Bw);
+		this->chart1->Series[1]->Points->AddXY("AB", ABw);
+
+	}
+	catch (Exception^ exc) {
+#ifdef DEBUG 
+		MessageBox::Show(exc->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка при построении графика");
+		Application::Exit();
+#endif
+	}
+}
+
+Void MainForm::CreateReport3() {
+	
+}
+
+//обновляет информацию о донорах в списке крови(Krocze - костыль с польского)
+Void MainForm::Krocze() {
+	for (int i = 0; i < blood.Count; i++) {
+		String^ name = blood[i]->getDonor()->getName();
+		for (int j = 0; j < donors.Count; j++) {
+			if (donors[j]->getName() == name) {
+				blood[i]->setDonor(donors[j]);
+				break;
+			}
+		}
 	}
 }

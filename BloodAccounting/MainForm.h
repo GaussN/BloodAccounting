@@ -24,18 +24,6 @@ namespace BloodAccounting {
 		int increment;
 	public:
 		List<Blood^> blood;
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::Label^ label12;
-	private: System::Windows::Forms::Label^ label11;
-	private: System::Windows::Forms::Label^ label10;
-	private: System::Windows::Forms::Label^ label9;
-	private: System::Windows::Forms::Label^ label8;
-	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::Label^ label13;
-	private: System::Windows::Forms::TabControl^ tabControl1;
-	private: System::Windows::Forms::TabPage^ tabPage4;
-	private: System::Windows::Forms::TabPage^ tabPage5;
-	public:
 		List<Donor^> donors;
 	public:
 		MainForm(void)
@@ -60,6 +48,24 @@ namespace BloodAccounting {
 			}
 		}
 	private: 
+		System::Windows::Forms::Label^ label6;
+		System::Windows::Forms::Label^ label12;
+		System::Windows::Forms::Label^ label11;
+		System::Windows::Forms::Label^ label10;
+		System::Windows::Forms::Label^ label9;
+		System::Windows::Forms::Label^ label8;
+		System::Windows::Forms::Label^ label7;
+		System::Windows::Forms::Label^ label13;
+		System::Windows::Forms::TabControl^ tabControl1;
+		System::Windows::Forms::TabPage^ tabPage4;
+		System::Windows::Forms::TabPage^ tabPage5;
+		System::Windows::Forms::Button^ bCreateChart1;
+
+		System::Windows::Forms::DataVisualization::Charting::Chart^ chart1;
+		System::Windows::Forms::RadioButton^ rbReport31;
+		System::Windows::Forms::RadioButton^ rbReport21;
+		System::Windows::Forms::RadioButton^ rbReport11;
+		System::Windows::Forms::CheckBox^ cbInWord1;
 		System::Windows::Forms::GroupBox^ groupBox4;
 		System::Windows::Forms::Button^ bDonorAdd;
 		System::Windows::Forms::GroupBox^ groupBox3;
@@ -70,8 +76,7 @@ namespace BloodAccounting {
 		System::Windows::Forms::Label^ label5;
 		System::Windows::Forms::ListBox^ lbDonors;
 		System::Windows::Forms::NumericUpDown^ nudNewDonorAge;
-	private: System::Windows::Forms::ComboBox^ cbNewDonorGender;
-
+		System::Windows::Forms::ComboBox^ cbNewDonorGender;
 		System::Windows::Forms::TextBox^ tbNewDonorName;
 		System::Windows::Forms::NumericUpDown^ nudDonorAge;
 		System::Windows::Forms::ComboBox^ cbDonorS;
@@ -106,6 +111,9 @@ namespace BloodAccounting {
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -155,6 +163,12 @@ namespace BloodAccounting {
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->rbReport31 = (gcnew System::Windows::Forms::RadioButton());
+			this->rbReport21 = (gcnew System::Windows::Forms::RadioButton());
+			this->rbReport11 = (gcnew System::Windows::Forms::RadioButton());
+			this->cbInWord1 = (gcnew System::Windows::Forms::CheckBox());
+			this->bCreateChart1 = (gcnew System::Windows::Forms::Button());
+			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -167,6 +181,8 @@ namespace BloodAccounting {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->BeginInit();
 			this->tabPage3->SuspendLayout();
 			this->tabControl1->SuspendLayout();
+			this->tabPage4->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -695,6 +711,12 @@ namespace BloodAccounting {
 			// 
 			// tabPage4
 			// 
+			this->tabPage4->Controls->Add(this->rbReport31);
+			this->tabPage4->Controls->Add(this->rbReport21);
+			this->tabPage4->Controls->Add(this->rbReport11);
+			this->tabPage4->Controls->Add(this->cbInWord1);
+			this->tabPage4->Controls->Add(this->bCreateChart1);
+			this->tabPage4->Controls->Add(this->chart1);
 			this->tabPage4->Location = System::Drawing::Point(4, 25);
 			this->tabPage4->Name = L"tabPage4";
 			this->tabPage4->Padding = System::Windows::Forms::Padding(3);
@@ -702,6 +724,76 @@ namespace BloodAccounting {
 			this->tabPage4->TabIndex = 0;
 			this->tabPage4->Text = L"О донорской крови";
 			this->tabPage4->UseVisualStyleBackColor = true;
+			// 
+			// rbReport31
+			// 
+			this->rbReport31->AutoSize = true;
+			this->rbReport31->Location = System::Drawing::Point(29, 359);
+			this->rbReport31->Name = L"rbReport31";
+			this->rbReport31->Size = System::Drawing::Size(153, 21);
+			this->rbReport31->TabIndex = 5;
+			this->rbReport31->Text = L"Отчет по возрасту";
+			this->rbReport31->UseVisualStyleBackColor = true;
+			// 
+			// rbReport21
+			// 
+			this->rbReport21->AutoSize = true;
+			this->rbReport21->Location = System::Drawing::Point(29, 332);
+			this->rbReport21->Name = L"rbReport21";
+			this->rbReport21->Size = System::Drawing::Size(416, 21);
+			this->rbReport21->TabIndex = 4;
+			this->rbReport21->Text = L"Отчет по группам крови (с разделением по полу доноров)";
+			this->rbReport21->UseVisualStyleBackColor = true;
+			// 
+			// rbReport11
+			// 
+			this->rbReport11->AutoSize = true;
+			this->rbReport11->Checked = true;
+			this->rbReport11->Location = System::Drawing::Point(29, 305);
+			this->rbReport11->Name = L"rbReport11";
+			this->rbReport11->Size = System::Drawing::Size(423, 21);
+			this->rbReport11->TabIndex = 3;
+			this->rbReport11->TabStop = true;
+			this->rbReport11->Text = L"Отчет по группам крови (c разделением по резус фактору)";
+			this->rbReport11->UseVisualStyleBackColor = true;
+			// 
+			// cbInWord1
+			// 
+			this->cbInWord1->AutoSize = true;
+			this->cbInWord1->Location = System::Drawing::Point(581, 333);
+			this->cbInWord1->Name = L"cbInWord1";
+			this->cbInWord1->Size = System::Drawing::Size(179, 21);
+			this->cbInWord1->TabIndex = 2;
+			this->cbInWord1->Text = L"Записать отчет в word";
+			this->cbInWord1->UseVisualStyleBackColor = true;
+			// 
+			// bCreateChart1
+			// 
+			this->bCreateChart1->Location = System::Drawing::Point(581, 360);
+			this->bCreateChart1->Name = L"bCreateChart1";
+			this->bCreateChart1->Size = System::Drawing::Size(179, 29);
+			this->bCreateChart1->TabIndex = 1;
+			this->bCreateChart1->Text = L"Построить график";
+			this->bCreateChart1->UseVisualStyleBackColor = true;
+			this->bCreateChart1->Click += gcnew System::EventHandler(this, &MainForm::bCreateChart1_Click);
+			// 
+			// chart1
+			// 
+			this->chart1->BackColor = System::Drawing::Color::SeaShell;
+			this->chart1->BorderlineColor = System::Drawing::Color::Transparent;
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->chart1->Legends->Add(legend1);
+			this->chart1->Location = System::Drawing::Point(6, 0);
+			this->chart1->Name = L"chart1";
+			this->chart1->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::None;
+			series1->ChartArea = L"ChartArea1";
+			series1->Legend = L"Legend1";
+			series1->Name = L"Series1";
+			this->chart1->Series->Add(series1);
+			this->chart1->Size = System::Drawing::Size(754, 284);
+			this->chart1->TabIndex = 0;
 			// 
 			// tabPage5
 			// 
@@ -744,6 +836,9 @@ namespace BloodAccounting {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudDonorAge))->EndInit();
 			this->tabPage3->ResumeLayout(false);
 			this->tabControl1->ResumeLayout(false);
+			this->tabPage4->ResumeLayout(false);
+			this->tabPage4->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -776,6 +871,12 @@ namespace BloodAccounting {
 		Void FillFormBloodList(bool O, bool A, bool B, bool AB);
 		Void FillFormDonorsList();
 		Void FillFormDonorsComboBox();
+
+		Void CreateReport1();
+		Void CreateReport2();
+		Void CreateReport3();
+
+		Void Krocze();
 
 	private: 
 		Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -884,12 +985,13 @@ namespace BloodAccounting {
 				FillFormBloodList();
 			}
 		}
-		System::Void lbDonors_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		Void lbDonors_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 			if (lbDonors->SelectedIndex == -1) {
 				bDonorChange->Enabled = false;
 				bDonorDelete->Enabled = false;
 				tbDonorName->Enabled = false;
 				nudDonorAge->Enabled = false;
+				cbDonorGender->Enabled = false;
 				cbDonor->Enabled = false;
 			}
 			else {
@@ -898,15 +1000,15 @@ namespace BloodAccounting {
 				tbDonorName->Enabled = true;
 				nudDonorAge->Enabled = true;
 				cbDonorGender->Enabled = true;
+				cbDonorGender->Enabled = true;
 				
 				Donor^ selectDonor = (Donor^)lbDonors->SelectedItem;
 				tbDonorName->Text = selectDonor->getName();
 				nudDonorAge->Value = Convert::ToDecimal(selectDonor->getAge());
-				cbDonorGender->SelectedIndex = selectDonor->getGender() ? 0 : 1;
-
+				cbDonorGender->SelectedItem = (bool)selectDonor->getGender() ? "муж" : "жен";
 			}
 		}
-		System::Void bDonorDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void bDonorDelete_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (MessageBox::Show(
 				"Вы точно хотите удалить " + ((Donor^)lbDonors->SelectedItem)->getName() + "?",
 				"Предупреждение", 
@@ -920,7 +1022,8 @@ namespace BloodAccounting {
 			
 			}
 		}
-		System::Void bDonorChange_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void bDonorChange_Click(System::Object^ sender, System::EventArgs^ e) {
+			
 			Donor^ selectDonor = (Donor^)this->lbDonors->SelectedItem;
 			String^ oldName = selectDonor->getName();
 
@@ -944,7 +1047,7 @@ namespace BloodAccounting {
 			
 			selectDonor->setName(this->tbDonorName->Text->Trim());
 			selectDonor->setAge(Convert::ToInt32(this->nudDonorAge->Value));
-			selectDonor->setGender(!Convert::ToBoolean(this->cbDonorGender->SelectedIndex));
+			selectDonor->setGender(this->cbDonorGender->SelectedIndex==0?true:false);
 
 			for (int i = 0; i < blood.Count; i++) {
 				if (blood[i]->getDonor()->getName() == oldName) {
@@ -955,13 +1058,14 @@ namespace BloodAccounting {
 			FillFormDonorsList();
 			FillFormDonorsComboBox();
 			FillFormBloodList();
+			Krocze();
 			WriteDonorsFile();
 			WriteBloodFile();
 
 			label13->Text = "";
 
 		}
-		System::Void bDonorAdd_Click(System::Object^ sender, System::EventArgs^ e) {
+		Void bDonorAdd_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (this->tbNewDonorName->Text->Trim()->Length <= 2) {
 				label6->Text = "Имя должо содержать хотя бы 2 символа";
 				return;
@@ -994,6 +1098,14 @@ namespace BloodAccounting {
 			this->cbNewDonorGender->SelectedIndex = -1;
 			this->tbNewDonorName->Text = "";
 
+		}
+		Void bCreateChart1_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (rbReport11->Checked)
+				CreateReport1();
+			else if (rbReport21->Checked)
+				CreateReport2();
+			else if (rbReport31->Checked)
+				CreateReport3();
 		}
 	};
 }
