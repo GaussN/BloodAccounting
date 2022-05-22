@@ -389,8 +389,68 @@ Void MainForm::CreateReport2() {
 	}
 }
 
+//хранит возраст доноров и 
+//массив с группами крови этого возраста
+//поля:
+//Age   Int32
+//Group List<Int32>
+ref struct AgeStatisic {
+	Int32^ Age;
+	List<Int32> Group;
+};
+
 Void MainForm::CreateReport3() {
-	
+	List<AgeStatisic^> groupByAge;
+
+	AgeStatisic^ st = gcnew AgeStatisic;
+	st->Age = blood[0]->getDonor()->getAge();
+	st->Group.Add(0);
+	st->Group.Add(0);
+	st->Group.Add(0);
+	st->Group.Add(0);
+	groupByAge.Add(st);
+
+	for (int i = 1; i < blood.Count; i++) {
+
+		for (int j = 0; j < groupByAge.Count; j++) {
+			if ((int)groupByAge[j]->Age == (int)blood[i]->getDonor()->getAge()) {
+				groupByAge[j]->Group[(int)blood[i]->getGroup() - 1]++;
+				goto next;
+			}
+		}
+
+		AgeStatisic^ nwSt = gcnew AgeStatisic;
+		nwSt->Age = blood[i]->getDonor()->getAge();
+		nwSt->Group.Add(0);
+		nwSt->Group.Add(0);
+		nwSt->Group.Add(0);
+		nwSt->Group.Add(0);
+		nwSt->Group[(int)blood[i]->getGroup() - 1]++;
+		groupByAge.Add(nwSt);
+
+	next:;
+	}
+
+	try {
+		this->chart1->Series->Clear();
+		for (int i = 0; i < groupByAge.Count; i++) {
+			this->chart1->Series->Add(groupByAge[i]->Age + " лет");
+			this->chart1->Series[i]->Points->AddXY("O", groupByAge[i]->Group[0]);
+			this->chart1->Series[i]->Points->AddXY("A", groupByAge[i]->Group[1]);
+			this->chart1->Series[i]->Points->AddXY("B", groupByAge[i]->Group[2]);
+			this->chart1->Series[i]->Points->AddXY("AB", groupByAge[i]->Group[3]);
+		}
+	}
+	catch (Exception^ exc) {
+#ifdef DEBUG 
+		MessageBox::Show(exc->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка при построении графика");
+		Application::Exit();
+#endif
+
+	}
 }
 
 //обновляет информацию о донорах в списке крови(Krocze - костыль с польского)

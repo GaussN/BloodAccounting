@@ -947,9 +947,9 @@ namespace BloodAccounting {
 			BloodAdd^ addForm = gcnew BloodAdd(DonorsFile);
 			if (addForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				Donor^ donor;
-				String^ donorName = addForm->Name;
+				String^ donorName = addForm->DonorName;
 				for (int i = 0; i < donors.Count; i++) {
-					if (donorName = donors[i]->getName()) {
+					if (donorName == donors[i]->getName()) {
 						donor = donors[i];
 						break;
 					}
@@ -1016,6 +1016,8 @@ namespace BloodAccounting {
 			) == System::Windows::Forms::DialogResult::Yes) {
 
 				donors.Remove((Donor^)lbDonors->SelectedItem);
+				
+				Krocze();
 				FillFormDonorsComboBox();
 				FillFormDonorsList();
 				WriteDonorsFile();
@@ -1055,10 +1057,10 @@ namespace BloodAccounting {
 				}
 			}
 
+			Krocze();
 			FillFormDonorsList();
 			FillFormDonorsComboBox();
 			FillFormBloodList();
-			Krocze();
 			WriteDonorsFile();
 			WriteBloodFile();
 
@@ -1089,6 +1091,14 @@ namespace BloodAccounting {
 
 			donors.Add(newDonor);
 
+			
+			for (int i = 0; i < blood.Count; i++) {
+				if (blood[i]->getDonor()->getName() == name + "(не зарегестрирован)") {
+					blood[i]->setDonor(newDonor);
+				}
+			}
+
+			FillFormBloodList();
 			FillFormDonorsList();
 			FillFormDonorsComboBox();
 			WriteDonorsFile();
