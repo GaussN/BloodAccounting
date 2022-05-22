@@ -433,13 +433,28 @@ Void MainForm::CreateReport3() {
 
 	try {
 		this->chart1->Series->Clear();
+		
+		this->chart1->Series->Add("O");
+		this->chart1->Series->Add("A");
+		this->chart1->Series->Add("B");
+		this->chart1->Series->Add("AB");
+
+		//это вариант, при котором для кождого возраста считается количество кождой группы крови
 		for (int i = 0; i < groupByAge.Count; i++) {
+			this->chart1->Series[0]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[0]);
+			this->chart1->Series[1]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[1]);
+			this->chart1->Series[2]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[2]);
+			this->chart1->Series[3]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[3]);
+		}
+		
+		//это вариант, при котором для каждой группы считается количество доноров каждого возраста
+		/*for (int i = 0; i < groupByAge.Count; i++) {
 			this->chart1->Series->Add(groupByAge[i]->Age + " лет");
 			this->chart1->Series[i]->Points->AddXY("O", groupByAge[i]->Group[0]);
 			this->chart1->Series[i]->Points->AddXY("A", groupByAge[i]->Group[1]);
 			this->chart1->Series[i]->Points->AddXY("B", groupByAge[i]->Group[2]);
 			this->chart1->Series[i]->Points->AddXY("AB", groupByAge[i]->Group[3]);
-		}
+		}*/
 	}
 	catch (Exception^ exc) {
 #ifdef DEBUG 
