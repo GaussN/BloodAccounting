@@ -125,12 +125,12 @@ namespace BloodAccounting {
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea4 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea3 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::Windows::Forms::DataVisualization::Charting::Legend^ legend3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
 			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea4 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -181,6 +181,7 @@ namespace BloodAccounting {
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
 			this->rbReport31 = (gcnew System::Windows::Forms::RadioButton());
+			this->rbReport21 = (gcnew System::Windows::Forms::RadioButton());
 			this->rbReport11 = (gcnew System::Windows::Forms::RadioButton());
 			this->cbInWord1 = (gcnew System::Windows::Forms::CheckBox());
 			this->bCreateChart1 = (gcnew System::Windows::Forms::Button());
@@ -192,7 +193,6 @@ namespace BloodAccounting {
 			this->cbInWord2 = (gcnew System::Windows::Forms::CheckBox());
 			this->bCreateChart2 = (gcnew System::Windows::Forms::Button());
 			this->chart2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
-			this->rbReport21 = (gcnew System::Windows::Forms::RadioButton());
 			this->tabControl->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
@@ -755,10 +755,20 @@ namespace BloodAccounting {
 			this->rbReport31->AutoSize = true;
 			this->rbReport31->Location = System::Drawing::Point(29, 359);
 			this->rbReport31->Name = L"rbReport31";
-			this->rbReport31->Size = System::Drawing::Size(153, 21);
+			this->rbReport31->Size = System::Drawing::Size(212, 21);
 			this->rbReport31->TabIndex = 5;
-			this->rbReport31->Text = L"Отчет по возрасту";
+			this->rbReport31->Text = L"Отчет по возрасту доноров";
 			this->rbReport31->UseVisualStyleBackColor = true;
+			// 
+			// rbReport21
+			// 
+			this->rbReport21->AutoSize = true;
+			this->rbReport21->Location = System::Drawing::Point(29, 332);
+			this->rbReport21->Name = L"rbReport21";
+			this->rbReport21->Size = System::Drawing::Size(416, 21);
+			this->rbReport21->TabIndex = 4;
+			this->rbReport21->Text = L"Отчет по группам крови (с разделением по полу доноров)";
+			this->rbReport21->UseVisualStyleBackColor = true;
 			// 
 			// rbReport11
 			// 
@@ -796,17 +806,17 @@ namespace BloodAccounting {
 			// 
 			this->chart1->BackColor = System::Drawing::Color::SeaShell;
 			this->chart1->BorderlineColor = System::Drawing::Color::Transparent;
-			chartArea4->Name = L"ChartArea1";
-			this->chart1->ChartAreas->Add(chartArea4);
-			legend4->Name = L"Legend1";
-			this->chart1->Legends->Add(legend4);
+			chartArea3->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea3);
+			legend3->Name = L"Legend1";
+			this->chart1->Legends->Add(legend3);
 			this->chart1->Location = System::Drawing::Point(6, 0);
 			this->chart1->Name = L"chart1";
 			this->chart1->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::None;
-			series4->ChartArea = L"ChartArea1";
-			series4->Legend = L"Legend1";
-			series4->Name = L"Series1";
-			this->chart1->Series->Add(series4);
+			series3->ChartArea = L"ChartArea1";
+			series3->Legend = L"Legend1";
+			series3->Name = L"Series1";
+			this->chart1->Series->Add(series3);
 			this->chart1->Size = System::Drawing::Size(754, 284);
 			this->chart1->TabIndex = 0;
 			// 
@@ -831,9 +841,9 @@ namespace BloodAccounting {
 			this->rbReport32->AutoSize = true;
 			this->rbReport32->Location = System::Drawing::Point(29, 359);
 			this->rbReport32->Name = L"rbReport32";
-			this->rbReport32->Size = System::Drawing::Size(153, 21);
+			this->rbReport32->Size = System::Drawing::Size(243, 21);
 			this->rbReport32->TabIndex = 11;
-			this->rbReport32->Text = L"Отчет по возрасту";
+			this->rbReport32->Text = L"Отчет по возрасту реципиентов";
 			this->rbReport32->UseVisualStyleBackColor = true;
 			// 
 			// rbReport22
@@ -841,9 +851,9 @@ namespace BloodAccounting {
 			this->rbReport22->AutoSize = true;
 			this->rbReport22->Location = System::Drawing::Point(29, 332);
 			this->rbReport22->Name = L"rbReport22";
-			this->rbReport22->Size = System::Drawing::Size(416, 21);
+			this->rbReport22->Size = System::Drawing::Size(447, 21);
 			this->rbReport22->TabIndex = 10;
-			this->rbReport22->Text = L"Отчет по группам крови (с разделением по полу доноров)";
+			this->rbReport22->Text = L"Отчет по группам крови (с разделением по полу реципиентов)";
 			this->rbReport22->UseVisualStyleBackColor = true;
 			// 
 			// rbReport12
@@ -882,29 +892,19 @@ namespace BloodAccounting {
 			// 
 			this->chart2->BackColor = System::Drawing::Color::SeaShell;
 			this->chart2->BorderlineColor = System::Drawing::Color::Transparent;
-			chartArea3->Name = L"ChartArea1";
-			this->chart2->ChartAreas->Add(chartArea3);
-			legend3->Name = L"Legend1";
-			this->chart2->Legends->Add(legend3);
+			chartArea4->Name = L"ChartArea1";
+			this->chart2->ChartAreas->Add(chartArea4);
+			legend4->Name = L"Legend1";
+			this->chart2->Legends->Add(legend4);
 			this->chart2->Location = System::Drawing::Point(6, 0);
 			this->chart2->Name = L"chart2";
 			this->chart2->Palette = System::Windows::Forms::DataVisualization::Charting::ChartColorPalette::None;
-			series3->ChartArea = L"ChartArea1";
-			series3->Legend = L"Legend1";
-			series3->Name = L"Series1";
-			this->chart2->Series->Add(series3);
+			series4->ChartArea = L"ChartArea1";
+			series4->Legend = L"Legend1";
+			series4->Name = L"Series1";
+			this->chart2->Series->Add(series4);
 			this->chart2->Size = System::Drawing::Size(754, 284);
 			this->chart2->TabIndex = 6;
-			// 
-			// rbReport21
-			// 
-			this->rbReport21->AutoSize = true;
-			this->rbReport21->Location = System::Drawing::Point(29, 332);
-			this->rbReport21->Name = L"rbReport21";
-			this->rbReport21->Size = System::Drawing::Size(416, 21);
-			this->rbReport21->TabIndex = 4;
-			this->rbReport21->Text = L"Отчет по группам крови (с разделением по полу доноров)";
-			this->rbReport21->UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 
@@ -1078,6 +1078,7 @@ namespace BloodAccounting {
 		}
 		Void useBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			
+			int index = this->lbBlood->SelectedIndex;
 			UseBloodForm^ useForm = gcnew UseBloodForm();
 			if (useForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
@@ -1088,7 +1089,7 @@ namespace BloodAccounting {
 				String^ log = selectBlood->ToString() + ";" + name + ";" + age + ";" + gender;
 				
 				WriteLog(log);
-				blood.Remove(selectBlood);
+				blood.RemoveAt(index);
 				WriteBloodFile();
 				FillFormBloodList();
 			}

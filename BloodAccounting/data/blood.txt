@@ -1,3 +1,2 @@
-18;1;False;Test
-19;3;True;Utyf Gapa
-20;3;True;Utyf Gapa
+10;1;True;Gena Gapanowicz
+12;1;True;Gena Gapanowicz

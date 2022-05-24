@@ -368,6 +368,7 @@ Void CreateReport2(System::Windows::Forms::DataVisualization::Charting::Chart^ c
 			(bool)blood[i]->getDonor()->getGender() ? ABm++ : ABw++;
 			break;
 		}
+		MessageBox::Show(i + " " + blood[i]->getDonor()->getName() + " " + blood[i]->getDonor()->getGender());
 	}
 
 	try {
@@ -494,15 +495,159 @@ Void MainForm::CreateReport12() {
 		reader->Close();
 	}
 
-	CreateReport1(this->chart1, this->usedBlood);
+	CreateReport1(this->chart2, usedBlood);
 }
 
 Void MainForm::CreateReport22() {
-	
+	List<Donor^> recipients;//у доноров и реципиентов одинаковые поля
+	List<Blood^> usedBlood;
+
+	//получение реципиентов
+	StreamReader^ reader;
+	try {
+		reader = gcnew StreamReader(LogsFile);
+		String^ line;
+		while (line = reader->ReadLine()) {
+			line = line->Trim();
+			if (line != String::Empty) {
+				auto buffer = line->Split(';');
+				auto name = buffer[4];
+				auto age = Convert::ToInt32(buffer[5]);
+				auto gender = Convert::ToBoolean(buffer[6]);
+				recipients.Add(gcnew Donor(name, age, gender));
+			}
+		}
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+
+	//получение использование крови
+	try {
+		blood.Clear();
+		reader = gcnew StreamReader(LogsFile);
+		String^ line;
+		while (line = reader->ReadLine()) {
+			line = line->Trim();
+			if (line != String::Empty) {
+				auto buffer = line->Split(';');
+				auto num = Convert::ToInt32(buffer[0]);
+				auto group = Convert::ToInt32(buffer[1]);
+				auto factor = Convert::ToBoolean(buffer[2]);
+				auto recipientName = buffer[4];
+				auto recipient = gcnew Donor();
+				recipient->setName(recipientName);
+				//поиск реципиента
+				for (int i = 0; i < recipients.Count; i++) {
+					if (recipients[i]->getName() == recipientName) {
+						recipient = recipients[i];
+						break;
+					}
+				}
+
+				usedBlood.Add(gcnew Blood(num, group, factor, recipient));
+			}
+		}
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+
+	CreateReport2(this->chart2, usedBlood, recipients);
 }
 
 Void MainForm::CreateReport32() {
-	
+	List<Donor^> recipients;//у доноров и реципиентов одинаковые поля
+	List<Blood^> usedBlood;
+
+	//получение реципиентов
+	StreamReader^ reader;
+	try {
+		reader = gcnew StreamReader(LogsFile);
+		String^ line;
+		while (line = reader->ReadLine()) {
+			line = line->Trim();
+			if (line != String::Empty) {
+				auto buffer = line->Split(';');
+				auto name = buffer[4];
+				auto age = Convert::ToInt32(buffer[5]);
+				auto gender = Convert::ToBoolean(buffer[6]);
+				recipients.Add(gcnew Donor(name, age, gender));
+			}
+		}
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+
+	//получение использование крови
+	try {
+		blood.Clear();
+		reader = gcnew StreamReader(LogsFile);
+		String^ line;
+		while (line = reader->ReadLine()) {
+			line = line->Trim();
+			if (line != String::Empty) {
+				auto buffer = line->Split(';');
+				auto num = Convert::ToInt32(buffer[0]);
+				auto group = Convert::ToInt32(buffer[1]);
+				auto factor = Convert::ToBoolean(buffer[2]);
+				auto recipientName = buffer[4];
+				auto recipient = gcnew Donor();
+				recipient->setName(recipientName);
+				//поиск реципиента
+				for (int i = 0; i < recipients.Count; i++) {
+					if (recipients[i]->getName() == recipientName) {
+						recipient = recipients[i];
+						break;
+					}
+				}
+
+				usedBlood.Add(gcnew Blood(num, group, factor, recipient));
+			}
+		}
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+
+	CreateReport3(this->chart2, usedBlood, recipients);
 }
 
 //обновляет информацию о донорах в списке крови(Krocze - костыль с польского)

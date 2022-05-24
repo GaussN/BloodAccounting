@@ -38,8 +38,6 @@ namespace BloodAccounting {
 			this->_name = value;
 		}
 		void setAge(Int32^ value) {
-			if (static_cast<int>(value) < 17)
-				throw gcnew Exception("Age must be over or equal to 18");
 			this->_age = value;
 		}
 		void setGender(Boolean^ value) {
