@@ -185,7 +185,7 @@ namespace BloodAccounting {
 			this->button1->TabIndex = 15;
 			this->button1->Text = L"Добавить";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &BloodAdd::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &BloodAdd::bCreateChart2_Click);
 			// 
 			// label5
 			// 
@@ -218,7 +218,7 @@ namespace BloodAccounting {
 
 		}
 #pragma endregion
-		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		System::Void bCreateChart2_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (cbGroup->SelectedIndex == -1) {
 				this->label5->Text = "поле \"группа крови\" не \nдолжно быть пустым";
 				return;

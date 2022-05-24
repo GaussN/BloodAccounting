@@ -291,7 +291,17 @@ Void MainForm::UpdateIncrement() {
 	}
 }
 
-Void MainForm::CreateReport1() {
+//хранит возраст доноров и 
+//массив с группами крови этого возраста
+//поля:
+//Age   Int32
+//Group List<Int32>
+ref struct AgeStatisic {
+	Int32^ Age;
+	List<Int32> Group;
+};
+
+Void CreateReport1(System::Windows::Forms::DataVisualization::Charting::Chart^ chart, List<Blood^>% blood) {
 	int Op(0), Ap(0), Bp(0), ABp(0);
 	int On(0), An(0), Bn(0), ABn(0);
 	for (int i = 0; i < blood.Count; i++) {
@@ -312,21 +322,21 @@ Void MainForm::CreateReport1() {
 	}
 
 	try {
-		this->chart1->Series->Clear();
+		chart->Series->Clear();
 
-		this->chart1->Series->Add("положительный \nrh фактор");
-		this->chart1->Series[0]->Points->Clear();
-		this->chart1->Series[0]->Points->AddXY("0", Op);
-		this->chart1->Series[0]->Points->AddXY("A", Ap);
-		this->chart1->Series[0]->Points->AddXY("B", Bp);
-		this->chart1->Series[0]->Points->AddXY("AB", ABp);
+		chart->Series->Add("положительный \nrh фактор");
+		chart->Series[0]->Points->Clear();
+		chart->Series[0]->Points->AddXY("0", Op);
+		chart->Series[0]->Points->AddXY("A", Ap);
+		chart->Series[0]->Points->AddXY("B", Bp);
+		chart->Series[0]->Points->AddXY("AB", ABp);
 
-		this->chart1->Series->Add("отрицательный \nrh фактор");
-		this->chart1->Series[1]->Points->Clear();
-		this->chart1->Series[1]->Points->AddXY("0", On);
-		this->chart1->Series[1]->Points->AddXY("A", An);
-		this->chart1->Series[1]->Points->AddXY("B", Bn);
-		this->chart1->Series[1]->Points->AddXY("AB", ABn);
+		chart->Series->Add("отрицательный \nrh фактор");
+		chart->Series[1]->Points->Clear();
+		chart->Series[1]->Points->AddXY("0", On);
+		chart->Series[1]->Points->AddXY("A", An);
+		chart->Series[1]->Points->AddXY("B", Bn);
+		chart->Series[1]->Points->AddXY("AB", ABn);
 
 	}
 	catch (Exception^ exc) {
@@ -340,7 +350,7 @@ Void MainForm::CreateReport1() {
 	}
 }
 
-Void MainForm::CreateReport2() {
+Void CreateReport2(System::Windows::Forms::DataVisualization::Charting::Chart^ chart, List<Blood^>% blood, List<Donor^>% donors) {
 	int Om(0), Am(0), Bm(0), ABm(0);
 	int Ow(0), Aw(0), Bw(0), ABw(0);
 	for (int i = 0; i < blood.Count; i++) {
@@ -360,22 +370,22 @@ Void MainForm::CreateReport2() {
 		}
 	}
 
-	try{
-		this->chart1->Series->Clear();
+	try {
+		chart->Series->Clear();
 
-		this->chart1->Series->Add("муж");
-		this->chart1->Series[0]->Points->Clear();
-		this->chart1->Series[0]->Points->AddXY("0", Om);
-		this->chart1->Series[0]->Points->AddXY("A", Am);
-		this->chart1->Series[0]->Points->AddXY("B", Bm);
-		this->chart1->Series[0]->Points->AddXY("AB", ABm);
+		chart->Series->Add("муж");
+		chart->Series[0]->Points->Clear();
+		chart->Series[0]->Points->AddXY("0", Om);
+		chart->Series[0]->Points->AddXY("A", Am);
+		chart->Series[0]->Points->AddXY("B", Bm);
+		chart->Series[0]->Points->AddXY("AB", ABm);
 
-		this->chart1->Series->Add("жен");
-		this->chart1->Series[1]->Points->Clear();
-		this->chart1->Series[1]->Points->AddXY("0", Ow);
-		this->chart1->Series[1]->Points->AddXY("A", Aw);
-		this->chart1->Series[1]->Points->AddXY("B", Bw);
-		this->chart1->Series[1]->Points->AddXY("AB", ABw);
+		chart->Series->Add("жен");
+		chart->Series[1]->Points->Clear();
+		chart->Series[1]->Points->AddXY("0", Ow);
+		chart->Series[1]->Points->AddXY("A", Aw);
+		chart->Series[1]->Points->AddXY("B", Bw);
+		chart->Series[1]->Points->AddXY("AB", ABw);
 
 	}
 	catch (Exception^ exc) {
@@ -389,28 +399,13 @@ Void MainForm::CreateReport2() {
 	}
 }
 
-//хранит возраст доноров и 
-//массив с группами крови этого возраста
-//поля:
-//Age   Int32
-//Group List<Int32>
-ref struct AgeStatisic {
-	Int32^ Age;
-	List<Int32> Group;
-};
+Void CreateReport3(System::Windows::Forms::DataVisualization::Charting::Chart^ chart, List<Blood^>% blood, List<Donor^>% donors) {
+	if (blood.Count == 0)
+		return;
 
-Void MainForm::CreateReport3() {
 	List<AgeStatisic^> groupByAge;
 
-	AgeStatisic^ st = gcnew AgeStatisic;
-	st->Age = blood[0]->getDonor()->getAge();
-	st->Group.Add(0);
-	st->Group.Add(0);
-	st->Group.Add(0);
-	st->Group.Add(0);
-	groupByAge.Add(st);
-
-	for (int i = 1; i < blood.Count; i++) {
+	for (int i = 0; i < blood.Count; i++) {
 
 		for (int j = 0; j < groupByAge.Count; j++) {
 			if ((int)groupByAge[j]->Age == (int)blood[i]->getDonor()->getAge()) {
@@ -432,29 +427,15 @@ Void MainForm::CreateReport3() {
 	}
 
 	try {
-		this->chart1->Series->Clear();
-		
-		this->chart1->Series->Add("O");
-		this->chart1->Series->Add("A");
-		this->chart1->Series->Add("B");
-		this->chart1->Series->Add("AB");
 
-		//это вариант, при котором для кождого возраста считается количество кождой группы крови
+		chart->Series->Clear();
 		for (int i = 0; i < groupByAge.Count; i++) {
-			this->chart1->Series[0]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[0]);
-			this->chart1->Series[1]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[1]);
-			this->chart1->Series[2]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[2]);
-			this->chart1->Series[3]->Points->AddXY(groupByAge[i]->Age, groupByAge[i]->Group[3]);
+			chart->Series->Add(groupByAge[i]->Age + " лет");
+			chart->Series[i]->Points->AddXY("O", groupByAge[i]->Group[0]);
+			chart->Series[i]->Points->AddXY("A", groupByAge[i]->Group[1]);
+			chart->Series[i]->Points->AddXY("B", groupByAge[i]->Group[2]);
+			chart->Series[i]->Points->AddXY("AB", groupByAge[i]->Group[3]);
 		}
-		
-		//это вариант, при котором для каждой группы считается количество доноров каждого возраста
-		/*for (int i = 0; i < groupByAge.Count; i++) {
-			this->chart1->Series->Add(groupByAge[i]->Age + " лет");
-			this->chart1->Series[i]->Points->AddXY("O", groupByAge[i]->Group[0]);
-			this->chart1->Series[i]->Points->AddXY("A", groupByAge[i]->Group[1]);
-			this->chart1->Series[i]->Points->AddXY("B", groupByAge[i]->Group[2]);
-			this->chart1->Series[i]->Points->AddXY("AB", groupByAge[i]->Group[3]);
-		}*/
 	}
 	catch (Exception^ exc) {
 #ifdef DEBUG 
@@ -466,6 +447,62 @@ Void MainForm::CreateReport3() {
 #endif
 
 	}
+}
+
+
+Void MainForm::CreateReport11() {
+	CreateReport1(this->chart1, blood);
+}
+
+Void MainForm::CreateReport21() {
+	CreateReport2(this->chart1, this->blood, this->donors);
+}
+
+Void MainForm::CreateReport31() {
+	CreateReport3(this->chart1, this->blood, this->donors);
+}
+
+
+Void MainForm::CreateReport12() {
+	List<Blood^> usedBlood;
+	//log : num;group;factor;donorName;recipientName;age;gender;
+	StreamReader^ reader;
+	try {
+		reader = gcnew StreamReader(LogsFile);
+		String^ line;
+		while (line = reader->ReadLine()) {
+			line = line->Trim();
+			if (line != String::Empty) {
+				auto buffer = line->Split(';');
+				Int32^ num = Convert::ToInt32(buffer[0]);
+				Int32^ group = Convert::ToInt32(buffer[1]);
+				Boolean^ factor = Convert::ToBoolean(buffer[2]);
+				usedBlood.Add(gcnew Blood(num, group, factor, gcnew Donor()));
+			}
+		}
+	}
+	catch (Exception^ ex) {
+#ifdef DEBUG 
+		MessageBox::Show(ex->Message);
+		throw;
+#else
+		MessageBox::Show("Ошибка чтения файла");
+		Application::Exit();
+#endif
+	}
+	finally {
+		reader->Close();
+	}
+
+	CreateReport1(this->chart1, this->usedBlood);
+}
+
+Void MainForm::CreateReport22() {
+	
+}
+
+Void MainForm::CreateReport32() {
+	
 }
 
 //обновляет информацию о донорах в списке крови(Krocze - костыль с польского)

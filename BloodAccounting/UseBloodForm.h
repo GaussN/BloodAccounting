@@ -183,7 +183,7 @@ namespace BloodAccounting {
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"Использовать";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &UseBloodForm::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &UseBloodForm::bCreateChart2_Click);
 			// 
 			// label1
 			// 
@@ -217,7 +217,7 @@ namespace BloodAccounting {
 
 		}
 #pragma endregion
-		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		System::Void bCreateChart2_Click(System::Object^ sender, System::EventArgs^ e) {
 			
 			if (tbName->Text->Trim()->Length < 2) {
 				label1->Text = "Имя должно состоять минимум \nиз 2х символов";
