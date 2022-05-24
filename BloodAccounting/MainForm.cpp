@@ -1,11 +1,12 @@
 #include <Windows.h>
 #include "MainForm.h"
 
-#define DEBUG
+//#define DEBUG
 
 using namespace BloodAccounting;
 using namespace System;
 using namespace System::IO;
+
 
 Void MainForm::WriteBloodFile() {
 	StreamWriter^ writer;
@@ -59,6 +60,7 @@ Void MainForm::WriteLog(String^ log) {
 	}
 	catch (Exception^ ex) {
 #ifdef DEBUG 
+		MessageBox::Show("Ошибка записи логов");
 		MessageBox::Show(ex->Message);
 		throw;
 #else
@@ -368,7 +370,6 @@ Void CreateReport2(System::Windows::Forms::DataVisualization::Charting::Chart^ c
 			(bool)blood[i]->getDonor()->getGender() ? ABm++ : ABw++;
 			break;
 		}
-		MessageBox::Show(i + " " + blood[i]->getDonor()->getName() + " " + blood[i]->getDonor()->getGender());
 	}
 
 	try {
@@ -462,7 +463,6 @@ Void MainForm::CreateReport21() {
 Void MainForm::CreateReport31() {
 	CreateReport3(this->chart1, this->blood, this->donors);
 }
-
 
 Void MainForm::CreateReport12() {
 	List<Blood^> usedBlood;
@@ -659,6 +659,169 @@ Void MainForm::Krocze() {
 				blood[i]->setDonor(donors[j]);
 				break;
 			}
+		}
+	}
+}
+
+Void MainForm::WordReport1() {
+	SaveFileDialog^ fileDialog = gcnew SaveFileDialog();
+	fileDialog->DefaultExt = "docx";
+	fileDialog->CreatePrompt = true;
+	fileDialog->OverwritePrompt = true;
+	fileDialog->Title = "Выберите путь отчета";
+
+	using namespace System::Reflection;
+
+	if (fileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		try {
+			String^ fileName = fileDialog->FileName;
+
+			auto wordApp = gcnew Microsoft::Office::Interop::Word::Application();
+			wordApp->Visible = false;
+			auto t = Type::Missing;
+			auto Document = wordApp->Documents->Add(t, t, t, t);
+			//
+			this->chart1->SaveImage(fileName + ".png", System::Drawing::Imaging::ImageFormat::Png);
+			Microsoft::Office::Interop::Word::Range^ docRange = Document->Range(t, t);
+			Microsoft::Office::Interop::Word::InlineShape^ autoScaledInlineShape = docRange->InlineShapes->AddPicture(String::Concat(fileName, ".png"), t, t, t);
+			float scaledWidth = autoScaledInlineShape->Width;
+			float scaledHeight = autoScaledInlineShape->Height;
+			autoScaledInlineShape->Delete();
+			Microsoft::Office::Interop::Word::Shape^ newShape = Document->Shapes->AddShape(1, 0, blood.Count + 3, scaledWidth, scaledHeight, t);
+			newShape->Fill->UserPicture(fileName + ".png");
+			Microsoft::Office::Interop::Word::InlineShape^ finalInlineShape = newShape->ConvertToInlineShape();
+			finalInlineShape->Range->Cut();
+			docRange->Paste();
+
+			//
+			wordApp->Selection->TypeText(DateTime::Now.ToString("Report\n"));
+			wordApp->Selection->TypeText(DateTime::Now.ToString("dd.MM.yyyy"));
+
+
+			System::Object^ t1 = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
+			System::Object^ t2 = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitContent;
+			wordApp->ActiveDocument->Tables->Add(wordApp->Selection->Range, blood.Count + 1, 6, t1, t2);
+
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Номер");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Группа крови");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 3)->Range->InsertAfter("Резус фактор");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 4)->Range->InsertAfter("Имя донора");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 5)->Range->InsertAfter("Возраст донора");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 6)->Range->InsertAfter("Пол донора");
+
+			for (int i = 2; i <= blood.Count + 1; i++) {
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 1)->Range->InsertAfter(blood[i - 2]->getNum()->ToString());
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 2)->Range->InsertAfter(blood[i - 2]->getGroup()->ToString());
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 3)->Range->InsertAfter(blood[i - 2]->getRhFactor()?"+":"-");
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 4)->Range->InsertAfter(blood[i - 2]->getDonor()->getName()->ToString());
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 5)->Range->InsertAfter(blood[i - 2]->getDonor()->getAge()->ToString());
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 6)->Range->InsertAfter(blood[i - 2]->getDonor()->getGender()?"муж":"жен");
+			}
+			wordApp->Selection->TypeText("\n\n");
+			wordApp->ActiveDocument->SaveAs(fileName, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+			wordApp->Quit(t, t, t);
+
+			File::Delete(fileName + ".png");
+		}
+		catch (Exception^ exception) {
+			MessageBox::Show("Ошибка при записи файла Word");
+			MessageBox::Show(exception->Message);
+		}
+	}
+}
+
+Void MainForm::WordReport2() {
+	
+	SaveFileDialog^ fileDialog = gcnew SaveFileDialog();
+	fileDialog->DefaultExt = "docx";
+	fileDialog->CreatePrompt = true;
+	fileDialog->OverwritePrompt = true;
+	fileDialog->Title = "Выберите путь отчета";
+
+	using namespace System::Reflection;
+
+	if (fileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		try {
+			List<String^> logs;
+			StreamReader^ reader;
+			try {
+				String^ line;
+				reader = gcnew StreamReader(LogsFile);
+				while (line = reader->ReadLine()) {
+					line = line->Trim();
+					if (line != String::Empty) {
+						logs.Add(line);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+#ifdef DEBUG 
+				MessageBox::Show(ex->Message);
+				throw;
+#else
+				MessageBox::Show("Ошибка чтения файла логов");
+				Application::Exit();
+#endif
+			}
+			finally {
+				reader->Close();
+			}
+
+
+			String^ fileName = fileDialog->FileName;
+
+			auto wordApp = gcnew Microsoft::Office::Interop::Word::Application();
+			wordApp->Visible = false;
+			auto t = Type::Missing;
+			auto Document = wordApp->Documents->Add(t, t, t, t);
+			//
+			this->chart2->SaveImage(fileName + ".png", System::Drawing::Imaging::ImageFormat::Png);
+			Microsoft::Office::Interop::Word::Range^ docRange = Document->Range(t, t);
+			Microsoft::Office::Interop::Word::InlineShape^ autoScaledInlineShape = docRange->InlineShapes->AddPicture(String::Concat(fileName, ".png"), t, t, t);
+			float scaledWidth = autoScaledInlineShape->Width;
+			float scaledHeight = autoScaledInlineShape->Height;
+			autoScaledInlineShape->Delete();
+			Microsoft::Office::Interop::Word::Shape^ newShape = Document->Shapes->AddShape(1, 0, logs.Count + 3, scaledWidth, scaledHeight, t);
+			newShape->Fill->UserPicture(fileName + ".png");
+			Microsoft::Office::Interop::Word::InlineShape^ finalInlineShape = newShape->ConvertToInlineShape();
+			finalInlineShape->Range->Cut();
+			docRange->Paste();
+
+			//
+			wordApp->Selection->TypeText(DateTime::Now.ToString("Report\n"));
+			wordApp->Selection->TypeText(DateTime::Now.ToString("dd.MM.yyyy"));
+
+
+			System::Object^ t1 = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
+			System::Object^ t2 = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitContent;
+			wordApp->ActiveDocument->Tables->Add(wordApp->Selection->Range, logs.Count + 1, 7, t1, t2);
+
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Номер");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Группа крови");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 3)->Range->InsertAfter("Резус фактор");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 4)->Range->InsertAfter("Имя донора");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 5)->Range->InsertAfter("Имя реципиента");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 6)->Range->InsertAfter("Возраст реципиента");
+			wordApp->ActiveDocument->Tables[1]->Cell(1, 7)->Range->InsertAfter("Пол реципиента");
+
+			for (int i = 2; i <= logs.Count + 1; i++) {
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 1)->Range->InsertAfter(logs[i - 2]->Split(';')[0]);
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 2)->Range->InsertAfter(logs[i - 2]->Split(';')[1]);
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 3)->Range->InsertAfter(logs[i - 2]->Split(';')[2]?"+":"-");
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 4)->Range->InsertAfter(logs[i - 2]->Split(';')[3]);
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 5)->Range->InsertAfter(logs[i - 2]->Split(';')[4]);
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 6)->Range->InsertAfter(logs[i - 2]->Split(';')[5]);
+				wordApp->ActiveDocument->Tables[1]->Cell(i, 7)->Range->InsertAfter(logs[i - 2]->Split(';')[6]?"муж":"жен");
+			}
+			wordApp->Selection->TypeText("\n\n");
+			wordApp->ActiveDocument->SaveAs(fileName, t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+			wordApp->Quit(t, t, t);
+
+			File::Delete(fileName + ".png");
+		}
+		catch (Exception^ exception) {
+			MessageBox::Show("Ошибка при записи файла Word");
+			MessageBox::Show(exception->Message);
 		}
 	}
 }

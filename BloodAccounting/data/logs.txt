@@ -1,1 +1,6 @@
-10;1;True;Gena Gapanowicz;122 122 122;5;True
+5;4;False;Test;num1 used;10;True
+4;4;False;Test;num2 user;9;False
+1;1;True;Gena Gapanowicz;num3 used;11;True
+12;1;True;Gena Gapanowicz;432 234234 234;16;True
+6;2;True;Gena Gapanowicz;234 432234 234;7;False
+10;1;True;Gena Gapanowicz;gdf sdfg dfg;9;True

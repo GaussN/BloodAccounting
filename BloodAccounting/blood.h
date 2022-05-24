@@ -20,9 +20,6 @@ namespace BloodAccounting {
 			this->setRhFactor(RhFactor);
 			this->setDonor(Donor);
 		}
-		Blood(Blood^ ot) : Blood(ot->getGroup(), ot->getGroup(), ot->getRhFactor(), ot->getDonor()) {
-			
-		}
 #pragma endregion
 #pragma region get/set
 		//set

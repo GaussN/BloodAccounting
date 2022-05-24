@@ -984,6 +984,9 @@ namespace BloodAccounting {
 		Void CreateReport22();
 		Void CreateReport32();
 
+		Void WordReport1();
+		Void WordReport2();
+
 		Void Krocze();
 
 	private: 
@@ -1078,7 +1081,6 @@ namespace BloodAccounting {
 		}
 		Void useBlood_Click(System::Object^ sender, System::EventArgs^ e) {
 			
-			int index = this->lbBlood->SelectedIndex;
 			UseBloodForm^ useForm = gcnew UseBloodForm();
 			if (useForm->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				auto selectBlood = (Blood^)this->lbBlood->SelectedItem;
@@ -1088,10 +1090,10 @@ namespace BloodAccounting {
 
 				String^ log = selectBlood->ToString() + ";" + name + ";" + age + ";" + gender;
 				
+				blood.Remove(selectBlood);
 				WriteLog(log);
-				blood.RemoveAt(index);
-				WriteBloodFile();
 				FillFormBloodList();
+				WriteBloodFile();
 			}
 		}
 		Void lbDonors_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -1225,6 +1227,8 @@ namespace BloodAccounting {
 				CreateReport21();
 			else if (rbReport31->Checked)
 				CreateReport31();
+			if (cbInWord1->Checked)
+				WordReport1();
 		}
 		Void bCreateChart2_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (rbReport12->Checked)
@@ -1233,6 +1237,8 @@ namespace BloodAccounting {
 				CreateReport22();
 			else if (rbReport32->Checked)
 				CreateReport32();
+			if (cbInWord2->Checked)
+				WordReport2();
 		}
 	};
 }
